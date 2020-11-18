@@ -1,0 +1,29 @@
+---
+- hosts: trendingserver 
+  any_errors_fatal: false
+  vars_files:
+    - vars/trendingserver-vars.yaml 
+  become: yes
+  tasks:
+    - name: Install packages Debian-Flavor 
+      apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: yes
+      vars:
+        packages:
+        - prometheus
+
+    - name: Copy Prometheus config
+      template:
+         src: templates/prometheus.jinja2
+         dest: /etc/prometheus/prometheus.yml
+         mode: '0644'
+
+    - name: Restart Prometheus 
+      service:
+        name: prometheus
+        state: restarted
+        enabled: yes
+
+
