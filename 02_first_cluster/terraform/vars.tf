@@ -54,7 +54,7 @@ variable "datadisk_size" {
 
 variable "datadisk_hdd_size" {
   type = number
-  default = 1000
+  default = 500
 }
 
 variable "disk-type_dataserver-a" {
@@ -69,7 +69,7 @@ variable "disk-type_dataserver-b" {
 
 variable "number_dataserver" {
   type = number
-  default = 5
+  default = 0
 }
 
 variable "flavor_dataserver" {
@@ -79,7 +79,7 @@ variable "flavor_dataserver" {
 
 variable "number_clientserver" {
   type = number
-  default = 1
+  default = 0
 }
 
 variable "flavor_clientserver" {

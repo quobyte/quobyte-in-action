@@ -110,6 +110,29 @@ policies:automatic:replicated_files_replication_factor_hdd
 ## problems coming from concurrent file access:
 client:cache:blocked_waiting_for_same_block_direct_io
 
+# do I have enough space left on my metadata devices?
+
+## display percentage
+sum(device:usage{service_type="quobyte-metadata"}) / sum(device:capacity{service_type="quobyte-metadata"})
+
+## Webconsole2proemetheus:
+
+range: 1h
+## IO Utilization trending
+raw: osd:storage:busy_time
+rate(osd:storage:busy_time[120s])
+fine tuned: rate(osd:storage:busy_time[120s])*0.1
+
+## IO throughput:
+
+
+
+## Metadata IO Utilization
+raw: rpc:server:rpc_worker_busy{service_type="quobyte-metadata"}
+grundwert: count(rpc:server:rpc_worker_busy{service_type="quobyte-metadata"})
+percentage: sum(rpc:server:rpc_worker_busy{service_type="quobyte-metadata"}) / count(rpc:server:rpc_worker_busy{service_type="quobyte-metadata"})
+
+
 
 
 

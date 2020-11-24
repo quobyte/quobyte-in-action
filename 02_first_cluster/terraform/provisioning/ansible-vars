@@ -1,7 +1,0 @@
-registry: 10.138.15.204,10.138.15.200,10.138.15.202,10.138.15.201
-s3_endpoint: s3.quobyte.local
-network: 10.0.0.0/8
-mountpoint: /quobyte
-metadatadevice: sdb
-datadevice: sdc
-clustername: smallpool

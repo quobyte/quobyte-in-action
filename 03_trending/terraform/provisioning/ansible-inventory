@@ -1,6 +1,0 @@
-[trendingserver]
-10.138.15.206
-
-[all:vars]
-ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-
