@@ -29,6 +29,7 @@ variable "flavor_labserver" {
 variable "image_labserver" {
   type = string
   //default = "ubuntu-os-cloud/ubuntu-2004-lts"
-  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+  //default = "ubuntu-os-cloud/ubuntu-1804-lts"
+  default = "debian-cloud/debian-9"
 }
 

@@ -43,7 +43,7 @@ variable "trendingdisk_size" {
 
 variable "registry_ip" {
   type = string
-  default = "10.138.15.213"
+  default = "10.138.0.21"
 }
 
 
