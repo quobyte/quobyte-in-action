@@ -18,7 +18,7 @@ variable "net_cidr" {
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
-  default = "smallpool"
+  default = "smallscale"
 }
 
 variable "image_coreserver" {
@@ -49,12 +49,12 @@ variable "image_dataserver" {
 
 variable "datadisk_size" {
   type = number
-  default = 50 
+  default = 100 
 }
 
 variable "datadisk_hdd_size" {
   type = number
-  default = 500
+  default = 100
 }
 
 variable "disk-type_dataserver-a" {
@@ -64,7 +64,8 @@ variable "disk-type_dataserver-a" {
 
 variable "disk-type_dataserver-b" {
   type = string
-  default = "pd-standard"
+  //default = "pd-standard"
+  default = "pd-ssd"
 }
 
 variable "number_dataserver" {

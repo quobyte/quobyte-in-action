@@ -1,0 +1,18 @@
+[cluster]
+10.138.0.44
+10.138.0.42
+10.138.0.34
+10.138.0.35
+
+[dataserver]
+10.138.0.36
+10.138.0.32
+10.138.0.41
+10.138.0.33
+
+[clients]
+
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
