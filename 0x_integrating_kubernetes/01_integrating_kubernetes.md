@@ -1,6 +1,6 @@
 # Integrating Kubernetes
 
-This example shows how to connect a k8s cluster to a Quobyte sotrage cluster 
+This example shows how to connect a k8s cluster to a Quobyte storage cluster 
 and uses it for dynamic provisioning of volumes.
 
 This example does not assume that your Quobyte cluster runs on Kubernetes; although 
