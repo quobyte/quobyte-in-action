@@ -1,0 +1,18 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: quobyte-silver
+parameters:
+  accessMode: "770"
+  createQuota: "true"
+  csi.storage.k8s.io/controller-expand-secret-name: quobyte-admin-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: default
+  csi.storage.k8s.io/provisioner-secret-name: quobyte-admin-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: default
+  group: root
+  quobyteConfig: BASE
+  quobyteTenant: My Tenant
+  user: root
+  labels: "mediatype:hdd"
+provisioner: csi.quobyte.com

@@ -1,0 +1,21 @@
+policy_rule {
+  name: "Kubernetes Silver"
+  description: "Place files only on cheap HDDs if voluem labels say so."
+  creator: "jan-quobyte"
+  enabled: true
+  scope {
+    volume {
+      label_pattern {
+        name_regex: "mediatype"
+        value_regex: "hdd"
+      }
+    }
+    files_operator: ALL_OF
+  }
+  policies {
+    file_tag_based_placement {
+      required_tag: "hdd"
+    }
+  }
+}
+
