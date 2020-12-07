@@ -76,7 +76,6 @@ $ cd quobyte-k8s-helm
 
 2. Modify "values.yaml" to *not* install the Quobyte cluster into our k8s cluster
 
-```
 
 3. Encode secret + username to base64:
 
