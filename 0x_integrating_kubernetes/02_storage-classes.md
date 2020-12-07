@@ -144,7 +144,139 @@ Success. Imported policy rules.
 
 Now let's see what happens if we have a cluster with a suitable storage class and create a new volume with a respecting storage class. 
 
+Let's again do a PVC using this storage-class:
 
+```
+kubectl apply -f example-pvc-silver.yaml
+```
  
+Let's verify it is bound:
+
+```
+[jan@jan quobyte-k8s-helm]$ kubectl get pvc
+NAME                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
+quobyte-csi-test-silver   Bound    pvc-a56ac7ee-2066-4080-a288-46c731cffe0b   1Gi        RWO            quobyte-silver   4s
+```
+And finally let's use consume it form within a pod:
+
+```
+[jan@jan quobyte-k8s-helm]$ kubectl apply -f examplepod.yaml 
+pod/nginx-dynamic-vol configured
+[jan@jan quobyte-k8s-helm]$ kubectl get pods
+NAME                      READY   STATUS    RESTARTS   AGE
+nginx-dynamic-vol         1/1     Running   0          79m
+quobyte-client-ds-95hl4   1/1     Running   0          74s
+quobyte-client-ds-hgfc4   1/1     Running   0          54s
+quobyte-client-ds-jpqjn   1/1     Running   0          114s
+[jan@jan quobyte-k8s-helm]$ kubectl exec -it pod/nginx-dynamic-vol -- /bin/bash
+root@nginx-dynamic-vol:/# df -h
+Filesystem                                                  Size  Used Avail Use% Mounted on
+overlay                                                      95G  3.2G   92G   4% /
+tmpfs                                                        64M     0   64M   0% /dev
+tmpfs                                                       1.9G     0  1.9G   0% /sys/fs/cgroup
+/dev/sda1                                                    95G  3.2G   92G   4% /etc/hosts
+shm                                                          64M     0   64M   0% /dev/shm
+quobyte@10.138.0.54|10.138.15.192|10.138.0.55|10.138.0.57/  1.0G     0  1.0G   0% /usr/share/nginx/html
+tmpfs                                                       1.9G   12K  1.9G   1% /run/secrets/kubernetes.io/serviceaccount
+tmpfs                                                       1.9G     0  1.9G   0% /proc/acpi
+tmpfs                                                       1.9G     0  1.9G   0% /proc/scsi
+tmpfs                                                       1.9G     0  1.9G   0% /sys/firmware
+root@nginx-dynamic-vol:/# cd /usr/share/nginx/html/
+root@nginx-dynamic-vol:/usr/share/nginx/html# ls
+root@nginx-dynamic-vol:/usr/share/nginx/html# echo "Quobyte was here" > index.html
+root@nginx-dynamic-vol:/usr/share/nginx/html# ls -l
+total 1
+-rw-r--r-- 1 root root 17 Dec  7 12:49 index.html
+
+```
+
+## Again: Quobyte point of view
+
+Now let's switch back to the Quobyte point of view and inspect everything that happened on the cluster.
+
+Quobyte did an automatic mount of the fresh created volume under /quobyte. This allows us, to inspect content 
+that was created in Kubernetes:
+
+```
+deploy@smallscale-coreserver0:~$ sudo -i
+root@smallscale-coreserver0:~# cd /quobyte/pvc-a56ac7ee-2066-4080-a288-46c731cffe0b/
+root@smallscale-coreserver0:/quobyte/pvc-a56ac7ee-2066-4080-a288-46c731cffe0b# ls
+index.html
+root@smallscale-coreserver0:/quobyte/pvc-a56ac7ee-2066-4080-a288-46c731cffe0b# cat index.html 
+Quobyte was here
+root@smallscale-coreserver0:/quobyte/pvc-a56ac7ee-2066-4080-a288-46c731cffe0b# 
+```
+
+But further more we can finally proof that our file was written to HDD:
+
+```
+root@smallscale-coreserver0:/quobyte/pvc-4f5b2b86-cd37-461c-8f7d-3d824e52fc21# qinfo info index.html 
+posix_attrs {
+  id: 8
+  owner: "root"
+  group: "root"
+  mode: 33188
+  atime: 1607346923
+  ctime: 1607346923
+  mtime: 1607346923
+  size: 17
+  nlinks: 1
+  crtime: 1607346923
+  allocated_bytes: 17
+  physical_bytes: 51
+}
+system_attrs {
+  truncate_epoch: 0
+  issued_truncate_epoch: 0
+  immutable: false
+  windows_attributes: 0
+  allocated_size_record {
+    device_class: HDD
+    allocated_size_in_bytes: 17
+    physical_size_in_bytes: 51
+  }
+}
+storage_layout {
+  on_disk_format {
+    block_size_bytes: 4096
+    object_size_bytes: 8388608
+    crc_method: CRC_32_ISCSI
+    persistent_format: V2_METADATA_HEADER_4K
+  }
+  distribution {
+    data_stripe_count: 1
+    coding_method: NONE
+    striping_method: OBJECT_LEVEL
+  }
+  replication_factor: 3
+}
+file_name: "index.html"
+parent_file_id: 1
+file_retention_lock {
+  retention_flags: 0
+  retention_timestamp_s: 0
+}
+segment_creation_parameters {
+}
+created_at_snapshot_version: 1
+segment {
+  start_offset: 0
+  length: 10737418240
+  stripe {
+    version: 1
+    device_id: 16
+    device_id: 5
+    device_id: 7
+  }
+  effective_failure_domain_spread: MACHINE
+}
+version: 1
+
+No erasure coded file. Information not available.
+```
+
+Èt voila: the device class is now HDD
+
+
 
 
