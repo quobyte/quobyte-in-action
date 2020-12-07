@@ -10,7 +10,7 @@ We assume that you did the steps from chapter #1 and have the following resource
 2. A Kubernetes cluster with quobyte-clients + quobyte-csi plugin installed.
 
 Everything should be checked and it should already be verified that you have one working storage class
-that enables you to create persisten volume claims (PVC).
+that enables you to create persistent volume claims (PVC).
 
 ## Get started
 
@@ -42,7 +42,7 @@ provisioner: csi.quobyte.com
 
 The trick here is to create labels. With these labels it is possible to assign policies in Quobyte which in turn control every 
 aspect of storage later on in Quobyte.
-The idea behing this storage class is to have a cheap HDD medium with no special performance requirements (thus: "mediatype:hdd").
+The idea behind this storage class is to have a cheap HDD medium with no special performance requirements (thus: "mediatype:hdd").
 
 ### Test storage class by applying a pvc
 
@@ -157,7 +157,7 @@ Let's verify it is bound:
 NAME                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
 quobyte-csi-test-silver   Bound    pvc-a56ac7ee-2066-4080-a288-46c731cffe0b   1Gi        RWO            quobyte-silver   4s
 ```
-And finally let's use consume it form within a pod:
+And finally let's use consume it from within a pod:
 
 ```
 [jan@jan quobyte-k8s-helm]$ kubectl apply -f examplepod.yaml 
@@ -207,7 +207,7 @@ Quobyte was here
 root@smallscale-coreserver0:/quobyte/pvc-a56ac7ee-2066-4080-a288-46c731cffe0b# 
 ```
 
-But further more we can finally proof that our file was written to HDD:
+But further more we can finally proof that our file was written to HDD using the Quobyte-Client tool "qinfo":
 
 ```
 root@smallscale-coreserver0:/quobyte/pvc-4f5b2b86-cd37-461c-8f7d-3d824e52fc21# qinfo info index.html 
