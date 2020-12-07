@@ -88,6 +88,7 @@ amFuLWt1YmVybmF1dA==
 
 ...and put these credentials also into values.yaml
 
+```
 [jan@jan quobyte-k8s-helm]$ vi values.yaml 
 [jan@jan quobyte-k8s-helm]$ cat values.yaml 
 # Enables the Quobyte CSI plugin if set to true.
