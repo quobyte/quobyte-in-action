@@ -277,6 +277,12 @@ No erasure coded file. Information not available.
 
 Èt voila: the device class is now HDD
 
+Working through the same steps we can now create policies /storage classes for SSD-Only access, with extra-striping, no replication at all etc.
+
+One hint: It might be easier to create policy rules using the webconsole-ui and export them later to have them under version control. This 
+HowTo was using only the CLI to have a consistent way.
+
+
 
 
 
