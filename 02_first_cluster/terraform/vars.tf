@@ -60,17 +60,18 @@ variable "datadisk_hdd_size" {
 variable "disk-type_dataserver-a" {
   type = string
   default = "pd-ssd"
+  //default = "pd-standard"
 }
 
 variable "disk-type_dataserver-b" {
   type = string
-  //default = "pd-standard"
-  default = "pd-ssd"
+  default = "pd-standard"
+  //default = "pd-ssd"
 }
 
 variable "number_dataserver" {
   type = number
-  default = 0
+  default = 3
 }
 
 variable "flavor_dataserver" {

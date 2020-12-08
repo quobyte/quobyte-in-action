@@ -1,7 +1,0 @@
-registry: 10.138.0.44,10.138.0.42,10.138.0.34,10.138.0.35
-s3_endpoint: s3.quobyte.local
-network: 10.0.0.0/8
-mountpoint: /quobyte
-metadatadevice: sdb
-datadevice: sdc
-clustername: beerenberg
