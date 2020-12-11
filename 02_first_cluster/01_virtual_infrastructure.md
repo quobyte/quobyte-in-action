@@ -32,7 +32,18 @@ You should be able to login:
 $ ssh -A deploy@<externalIP>
 ```
 
-After login you should see the following directoy:
+After login you should see the following directoy layout:
+
+```
+deploy@smallscale-coreserver0:~$ ls -l
+total 12
+drwxr-xr-x 5 root   root   4096 Dec 11 14:34 ansible-deploy
+-rw-r--r-- 1 deploy deploy  201 Dec 11 14:34 ansible-inventory
+-rw-r--r-- 1 deploy deploy  197 Dec 11 14:34 ansible-vars
+```
+
+From here you can switch to the next chapter "02_server_provisioning".
+
 
 
 

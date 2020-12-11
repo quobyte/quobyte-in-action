@@ -1,4 +1,4 @@
-# Installing up Quobyte
+# Installing Quobyte
 
 
 ## Login to the first cluster node
