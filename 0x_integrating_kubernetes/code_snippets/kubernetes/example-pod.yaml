@@ -14,4 +14,4 @@ spec:
   volumes:
     - name: quobytepvc
       persistentVolumeClaim:
-        claimName: quobyte-csi-test-silver
+        claimName: quobyte-csi-test
