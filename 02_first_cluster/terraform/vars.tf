@@ -23,7 +23,8 @@ variable "cluster_name" {
 
 variable "image_coreserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "debian-cloud/debian-10"
 }
 
 variable "number_coreserver" {
@@ -44,7 +45,8 @@ variable "flavor_coreserver" {
 
 variable "image_dataserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "debian-cloud/debian-10"
 }
 
 variable "datadisk_size" {
@@ -91,7 +93,8 @@ variable "flavor_clientserver" {
 
 variable "image_clientserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "debian-cloud/debian-10"
 }
 
 

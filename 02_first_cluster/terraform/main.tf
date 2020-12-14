@@ -35,7 +35,7 @@ resource "google_compute_instance" "core" {
  }
 
  // install necessary software
- metadata_startup_script = "apt-get update; apt-get install -y wget ansible git; ansible-galaxy collection install ansible.posix; git clone --branch deploy-3.0  --single-branch https://github.com/quobyte/ansible-deploy.git /home/deploy/ansible-deploy"
+ metadata_startup_script = "apt-get update; apt-get install -y wget ansible git python; ansible-galaxy collection install ansible.posix; git clone --branch deploy-3.0  --single-branch https://github.com/quobyte/ansible-deploy.git /home/deploy/ansible-deploy"
  
  network_interface {
    network = "default"
