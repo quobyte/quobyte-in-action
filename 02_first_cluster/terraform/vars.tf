@@ -23,8 +23,9 @@ variable "cluster_name" {
 
 variable "image_coreserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
-  default = "debian-cloud/debian-10"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "debian-cloud/debian-10"
+  //default = "centos-cloud/centos-7"
 }
 
 variable "number_coreserver" {
@@ -45,8 +46,8 @@ variable "flavor_coreserver" {
 
 variable "image_dataserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
-  default = "debian-cloud/debian-10"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "debian-cloud/debian-10"
 }
 
 variable "datadisk_size" {
@@ -73,7 +74,7 @@ variable "disk-type_dataserver-b" {
 
 variable "number_dataserver" {
   type = number
-  default = 3
+  default = 0
 }
 
 variable "flavor_dataserver" {
@@ -93,8 +94,16 @@ variable "flavor_clientserver" {
 
 variable "image_clientserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
-  default = "debian-cloud/debian-10"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "debian-cloud/debian-10"
 }
 
+variable "startupscript_core_rpmflavor" {
+  type = string
+  default = "yum update; yum install -y wget ansible git python; ansible-galaxy collection install ansible.posix; git clone --branch deploy-3.0  --single-branch https://github.com/quobyte/ansible-deploy.git /home/deploy/ansible-deploy"
+}
 
+variable "startupscript_core_debflavor" {
+  type = string
+  default = "apt-get update; apt-get install -y wget ansible git python; ansible-galaxy collection install ansible.posix; git clone --branch deploy-3.0  --single-branch https://github.com/quobyte/ansible-deploy.git /home/deploy/ansible-deploy"
+}
