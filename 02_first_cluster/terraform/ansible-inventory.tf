@@ -10,6 +10,6 @@ resource "local_file" "AnsibleInventory" {
  filename = "provisioning/ansible-inventory"
  file_permission = "0644"
  provisioner "local-exec" {
-   command = "scp provisioning/ansible-inventory deploy@${google_compute_instance.core.0.network_interface.0.access_config.0.nat_ip}:"
+   command = "until scp provisioning/ansible-inventory deploy@${google_compute_instance.core.0.network_interface.0.access_config.0.nat_ip}: ; do sleep 1 ; done"
  }
 }

@@ -23,12 +23,22 @@ resource "google_compute_instance" "core" {
  }
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-coredatadisk-${count.index}"
+  source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-metadatadisk-${count.index}-a"
  } 
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-metadata-disk-${count.index}"
+  source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-coredatadisk-${count.index}-a"
  } 
+
+ attached_disk {
+  source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-coredatadisk-${count.index}-b"
+ } 
+
+ depends_on = [
+  google_compute_disk.coreserver-metadata-a,
+  google_compute_disk.coreserver-data-a,
+  google_compute_disk.coreserver-data-b
+ ]
 
  metadata = {
    ssh-keys = "deploy:${file("~/.ssh/id_rsa.pub")}"
@@ -36,7 +46,7 @@ resource "google_compute_instance" "core" {
 
  // install necessary software
  //metadata_startup_script = "apt-get update; apt-get install -y wget ansible git python; ansible-galaxy collection install ansible.posix; git clone --branch deploy-3.0  --single-branch https://github.com/quobyte/ansible-deploy.git /home/deploy/ansible-deploy"
- metadata_startup_script = var.startupscript_core_rpmflavor
+ metadata_startup_script = var.startupscript_core_debflavor
  
  network_interface {
    network = "default"
@@ -76,6 +86,11 @@ resource "google_compute_instance" "dataserver" {
    ssh-keys = "deploy:${file("~/.ssh/id_rsa.pub")}"
  }
 
+ depends_on = [
+  google_compute_disk.dataserver-data-a,
+  google_compute_disk.dataserver-data-b
+ ]
+
  // install necessary software
  metadata_startup_script = "apt-get update; apt-get install -y wget curl python"
 
@@ -112,16 +127,27 @@ resource "google_compute_instance" "client" {
 
  network_interface {
    network = "default"
+   access_config {
+     // Include this section to give the VM an external ip address
+   }
 
  }
 }
 
 // create necessary disks
-resource "google_compute_disk" "coreserver-data" {
+resource "google_compute_disk" "coreserver-data-a" {
    count = var.number_coreserver
-   name  = "${var.cluster_name}-coredatadisk-${count.index}"
+   name  = "${var.cluster_name}-coredatadisk-${count.index}-a"
    size  = var.datadisk_size 
    type  = var.disk-type_dataserver-a 
+   zone  = var.cluster_region
+}
+
+resource "google_compute_disk" "coreserver-data-b" {
+   count = var.number_coreserver
+   name  = "${var.cluster_name}-coredatadisk-${count.index}-b"
+   size  = var.datadisk_size 
+   type  = var.disk-type_dataserver-b
    zone  = var.cluster_region
 }
 
@@ -141,9 +167,9 @@ resource "google_compute_disk" "dataserver-data-b" {
    zone  = var.cluster_region
 }
 
-resource "google_compute_disk" "coreserver-metadata" {
+resource "google_compute_disk" "coreserver-metadata-a" {
   count = var.number_coreserver
-  name  = "${var.cluster_name}-metadata-disk-${count.index}"
+  name  = "${var.cluster_name}-metadatadisk-${count.index}-a"
   size  = 50
   type  = "pd-ssd"
   zone  = var.cluster_region

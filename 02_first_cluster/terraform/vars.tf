@@ -30,7 +30,7 @@ variable "image_coreserver" {
 
 variable "number_coreserver" {
   type = number
-  default = 4
+  default = 3
 }
 
 variable "disk-type_coreserver" {
@@ -74,7 +74,7 @@ variable "disk-type_dataserver-b" {
 
 variable "number_dataserver" {
   type = number
-  default = 0
+  default = 3
 }
 
 variable "flavor_dataserver" {

@@ -10,6 +10,6 @@ resource "local_file" "AnsibleVars" {
  filename = "provisioning/ansible-vars"
  file_permission = "0644"
  provisioner "local-exec" {
-   command = "scp provisioning/ansible-vars deploy@${google_compute_instance.core.0.network_interface.0.access_config.0.nat_ip}:"
+   command = "until scp provisioning/ansible-vars deploy@${google_compute_instance.core.0.network_interface.0.access_config.0.nat_ip}: ; do sleep 1; done"
  }
 }
