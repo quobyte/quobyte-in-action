@@ -26,10 +26,13 @@ Connect to the client node and perform the tests from there.
 Use the mount.quobyte command you copied, not the one from the code snippet.
 
 ```
-$ export upperLmit=6
+$ export upperLimit=6
+$ # note that we left out the mount target directory
+$ export mountCommand="mount.quobyte 10.138.0.31,10.138.0.41,10.138.0.29/testvolume"
 $ for i in $(seq 0 $upperLimit); do mkdir test-${i}; done
-$ for i in $(seq 0 $upperLimit); do mount.quobyte mount.quobyte 10.138.0.31,10.138.0.41,10.138.0.29/testvolume test-${i}; done 
-$ while true; do for i in $(seq 0 $upperLimit); do dd if=/dev/zero of=test-${i}/testfile${i} bs=1M count=5; done; done
+$ for i in $(seq 0 $upperLimit); do "${mountCommand}" test-${i}; done 
+$ for i in $(seq 0 $upperLimit); do ${mountCommand} test-${i}/; done
+$ while true; do for i in $(seq 0 $upperLimit); do dd if=/dev/zero of=test-${i}/testfile${i} bs=1M count=5 ; done; done
 ```
 
 This test will perform parallel mounts and writes. Optionally you can perform these tests from different nodes and compare the effects on the storage network and maybe performance.
