@@ -75,6 +75,6 @@ You can scale your Quobyte cluster by adding more data-nodes:
 This number will add/ remove additional nodes to your cluster.
 You can select which capacity the two attached data devices will have:
 
-* datadisk_hdd_size and
-* datadisk_size
+* datadisk_size-a and
+* datadisk_size-b
 

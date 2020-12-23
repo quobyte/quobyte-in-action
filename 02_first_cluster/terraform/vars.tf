@@ -30,7 +30,7 @@ variable "image_coreserver" {
 
 variable "number_coreserver" {
   type = number
-  default = 5
+  default = 3
 }
 
 variable "disk-type_coreserver" {
@@ -51,12 +51,12 @@ variable "image_dataserver" {
   default = "centos-cloud/centos-8"
 }
 
-variable "datadisk_size" {
+variable "datadisk_size-a" {
   type = number
   default = 100 
 }
 
-variable "datadisk_hdd_size" {
+variable "datadisk_size-b" {
   type = number
   default = 100
 }
@@ -75,7 +75,7 @@ variable "disk-type_dataserver-b" {
 
 variable "number_dataserver" {
   type = number
-  default = 0
+  default = 3
 }
 
 variable "flavor_dataserver" {
@@ -85,7 +85,7 @@ variable "flavor_dataserver" {
 
 variable "number_clientserver" {
   type = number
-  default = 0
+  default = 2
 }
 
 variable "flavor_clientserver" {

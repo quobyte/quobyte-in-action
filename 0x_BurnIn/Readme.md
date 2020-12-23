@@ -11,7 +11,7 @@ Goal: See storage characterisics for example during different health manager tas
 ## 02. High pressure
 
 With tis example we try to figure out how the cluster behaves if we put (possibly insane) high pressure on it. 
-We will sclae out our clients and demand a mixed workload from the cluster. 
+We will scale out our clients and demand a mixed workload from the cluster. 
 Goal: find the limits where sane operational conditions are given for your storage environment.
 
 

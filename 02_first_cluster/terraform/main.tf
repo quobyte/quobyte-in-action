@@ -140,7 +140,7 @@ resource "google_compute_instance" "client" {
 resource "google_compute_disk" "coreserver-data-a" {
    count = var.number_coreserver
    name  = "${var.cluster_name}-coredatadisk-${count.index}-a"
-   size  = var.datadisk_size 
+   size  = var.datadisk_size-a
    type  = var.disk-type_dataserver-a 
    zone  = var.cluster_region
 }
@@ -148,7 +148,7 @@ resource "google_compute_disk" "coreserver-data-a" {
 resource "google_compute_disk" "coreserver-data-b" {
    count = var.number_coreserver
    name  = "${var.cluster_name}-coredatadisk-${count.index}-b"
-   size  = var.datadisk_size 
+   size  = var.datadisk_size-b
    type  = var.disk-type_dataserver-b
    zone  = var.cluster_region
 }
@@ -156,7 +156,7 @@ resource "google_compute_disk" "coreserver-data-b" {
 resource "google_compute_disk" "dataserver-data-a" {
    count = var.number_dataserver
    name  = "${var.cluster_name}-datadisk-${count.index}-a"
-   size  = var.datadisk_hdd_size 
+   size  = var.datadisk_size-a
    type  = var.disk-type_dataserver-b 
    zone  = var.cluster_region
 }
@@ -164,7 +164,7 @@ resource "google_compute_disk" "dataserver-data-a" {
 resource "google_compute_disk" "dataserver-data-b" {
    count = var.number_dataserver
    name  = "${var.cluster_name}-datadisk-${count.index}-b"
-   size  = var.datadisk_size 
+   size  = var.datadisk_size-b
    type  = "pd-ssd"
    zone  = var.cluster_region
 }
