@@ -1,2 +1,4 @@
 **/.terraform
 *terraform.tfstate*
+02_first_cluster/terraform/provisioning/ansible-inventory 
+02_first_cluster/terraform/provisioning/ansible-vars
