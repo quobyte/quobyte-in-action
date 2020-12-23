@@ -1,7 +1,14 @@
+# Registry entries.
 registry: ${registry_ips}
+# A valid DNS entry for the S3 endpoint
 s3_endpoint: s3.quobyte.local
+# Define your storage network
 network: ${net_cidr}
+# Where should volumes be automatically mounted?
 mountpoint: /quobyte
+# Select a dedicated device for the metadata service
 metadatadevice: sdb
-datadevice: sdc
+# Name of your Quobyte cluster
 clustername: ${cluster_name}
+# How many servers should run Quobyte core services?
+clustersize: 3

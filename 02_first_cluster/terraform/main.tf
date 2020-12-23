@@ -45,8 +45,8 @@ resource "google_compute_instance" "core" {
  }
 
  // install necessary software
- //metadata_startup_script = "apt-get update; apt-get install -y wget ansible git python; ansible-galaxy collection install ansible.posix; git clone --branch deploy-3.0  --single-branch https://github.com/quobyte/ansible-deploy.git /home/deploy/ansible-deploy"
- metadata_startup_script = var.startupscript_core_debflavor
+ //metadata_startup_script = var.startupscript_core_debflavor
+ metadata_startup_script = var.startupscript_core_rpmflavor
  
  network_interface {
    network = "default"
@@ -92,7 +92,8 @@ resource "google_compute_instance" "dataserver" {
  ]
 
  // install necessary software
- metadata_startup_script = "apt-get update; apt-get install -y wget curl python"
+ //metadata_startup_script = var.startupscript_other_debflavor
+ metadata_startup_script = var.startupscript_other_rpmflavor
 
  network_interface {
    network = "default"
@@ -123,7 +124,8 @@ resource "google_compute_instance" "client" {
  }
 
 // install needed software 
- metadata_startup_script = "apt-get update; apt-get install -y wget"
+ //metadata_startup_script = var.startupscript_other_debflavor
+ metadata_startup_script = var.startupscript_other_rpmflavor
 
  network_interface {
    network = "default"
