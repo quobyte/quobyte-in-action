@@ -7,6 +7,8 @@ $ ssh -A deploy@<publicIPOfYourFirstClusterNode>
 ```
 
 ## Run ansible based quobyte installation
+
 ```
-$ ansible-playbook -i ansible-inventory -e @ansible-vars ansible-deploy/install-quobyte-server.yaml
+$ sudo cp ansible-vars ansible-deploy/vars/quobyte.yaml
+$ ansible-playbook -i ansible-inventory ansible-deploy/install-quobyte-core.yaml
 ```
