@@ -12,6 +12,15 @@ This repository does not contain the [official documentation](https://support.qu
 This repository is usually structured in chapters that work on their own. If you are for example interested in how to integrate Quobyte into a Kubernetes 
 cluster simply change into that directory and follow the numbered instructions there. 
 
+Or you simply follow the first three chapters in order: 
+
+* [01_preflight](https://github.com/jan379/quobyte-in-action/tree/main/01_preflight) check, if Terraform and Ansible are working like expected.
+* [02_first_cluster](https://github.com/jan379/quobyte-in-action/tree/main/02_first_cluster) on how to set up a Quobyte system.
+* [03_trending](https://github.com/jan379/quobyte-in-action/tree/main/03_trending). This chapter will help to set up a [Prometheus](https://prometheus.io/) trending server 
+ to monitor metrics from your Quobyte cluster, store them over time and make them accessible as graphs.
+
+These three steps give you a valid base setup to perform any other steps mentioned in any other chapter.
+
 For the sake of keeping things easy and repeatable some tools are used throughout the tutorials here:
 
 1. Terraform
