@@ -1,12 +1,24 @@
 # Quoybte in action
 
-This repo provides material that goes beyond demonstrating "Quobyte is easy to install"
+This repository provides material to get hands on experience with Quobyte.
 
-With material collected here you will be able to try out things like classical maintenance or observe error handling.
+With material collected here you will be able to try out things like maintenance tasks, 
+see how Quobyte reacts to hardware failures or how you can scale out a Quobyte storage system.
 
-## Tooling
+This repository does not contain the [official documentation](https://support.quobyte.com/docs/16/latest/index.html) but contains step by step tutorials on how to get specific things done.
 
-* Set up metrics collections over time (Prometheus) and watch effects like self healing + perfomance patterns over time
+## How to use this repository
+
+This repository is usually structured in chapters that work on their own. If you are for example interested in how to integrate Quobyte into a Kubernetes 
+cluster simply change into that directory and follow the numbered instructions there. 
+
+For the sake of keeping things easy and repeatable some tools are used throughout the tutorials here:
+
+1. Terraform
+If you do not have a lab environment with existing machines available we provide some terraform receipts to set up virtual machines in a cloud environment (Infrastructure as code).
+
+2. Ansible
+To install software to linux boxes in a convenient way we use Ansible. Ansible is more or less used as a wrapper around official supported tools like the Quobyte installer. If you need to transfer steps done in an Ansible playbook to other automation tools like Saltstack you can use these playbooks as a reference/ inspiration.
 
 
 ## Maintenance
@@ -18,6 +30,7 @@ With material collected here you will be able to try out things like classical m
 * Upgrade Quobyte
 	* Upgrade clients
 	* Upgrade services
+
 
 ## Operational edge cases
 
@@ -54,9 +67,16 @@ For installing things Ansible is used.
 
 ## Literature
 
+### Architecture
+
 The Quoybte architectural whitepaper could be useful for concepts, 
 buzzwords and a general understanding of what the hell you are doing here: 
 
 https://www.quobyte.com/downloads/quobyte-architecture_whitepaper.pdf
+
+### Reference
+
+Many topics mentioned here are explained in depth in our recent [online reference](https://support.quobyte.com/docs/16/latest/index.html).
+
 
 
