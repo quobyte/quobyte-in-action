@@ -85,7 +85,7 @@ variable "flavor_dataserver" {
 
 variable "number_clientserver" {
   type = number
-  default = 2
+  default = 0
 }
 
 variable "flavor_clientserver" {
@@ -95,8 +95,9 @@ variable "flavor_clientserver" {
 
 variable "image_clientserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "debian-cloud/debian-10"
+  default = "centos-cloud/centos-8"
 }
 
 variable "startupscript_core_rpmflavor" {
