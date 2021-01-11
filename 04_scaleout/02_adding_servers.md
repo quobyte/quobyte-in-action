@@ -34,5 +34,8 @@ $ ansible-playbook -i ansible-inventory ansible-deploy/scaleout_dataservices.yam
 
 That is all there is to do to add new data servers.
 
+The ansible playbook will take care of installing the necessary software and integrating them into the cluster.
+
+
 
 
