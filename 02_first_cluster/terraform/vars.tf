@@ -102,12 +102,12 @@ variable "image_clientserver" {
 
 variable "startupscript_core_rpmflavor" {
   type = string
-  default = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone https://github.com/quobyte/quobyte-in-action.git /home/deploy/ansible-deploy"
+  default = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone https://github.com/quobyte/ansible-deploy-3.x.git /home/deploy/ansible-deploy"
 }
 
 variable "startupscript_core_debflavor" {
   type = string
-  default = "apt-get update; apt-get install -y wget ansible git python; git clone https://github.com/quobyte/quobyte-in-action.git /home/deploy/ansible-deploy"
+  default = "apt-get update; apt-get install -y wget ansible git python; git clone https://github.com/quobyte/ansible-deploy-3.x.git /home/deploy/ansible-deploy"
 }
 
 variable "startupscript_other_debflavor" {
