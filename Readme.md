@@ -1,4 +1,4 @@
-# Quoybte in action
+# Quobyte in action
 
 This repository provides material to get hands on experience with Quobyte.
 
@@ -78,7 +78,7 @@ For installing things Ansible is used.
 
 ### Architecture
 
-The Quoybte architectural whitepaper could be useful for concepts, 
+The Quobyte architectural whitepaper could be useful for concepts, 
 buzzwords and a general understanding of what the hell you are doing here: 
 
 https://www.quobyte.com/downloads/quobyte-architecture_whitepaper.pdf
