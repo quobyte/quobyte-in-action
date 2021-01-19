@@ -63,3 +63,5 @@ Since Quobyte is a truly distributed file system each client (pod) can talk to a
 From a Kubernetes point of view it adds no complexity to your setup: Service discovery/ service delegation (which pod should talk to which data service?) is solved by the Quobyte registry service.
 
 Èt voila: Now you have a setup where each layer of resource consumption can be scaled individually.
+
+Code contained in this chapter will give you a practical demonstration using wordpress as an example.
