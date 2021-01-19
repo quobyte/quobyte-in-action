@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: webstorage
+spec:
+  accessModes: [ "ReadWriteMany" ]
+  storageClassName: quobyte-rf3
+  resources:
+    requests:
+      storage: 2Gi
+
