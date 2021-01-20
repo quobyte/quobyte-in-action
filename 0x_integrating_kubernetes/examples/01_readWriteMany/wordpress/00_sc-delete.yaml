@@ -1,0 +1,24 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    meta.helm.sh/release-name: client-and-csi
+    meta.helm.sh/release-namespace: default
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: quobyte-rf3-delete
+parameters:
+  accessMode: "777"
+  createQuota: "true"
+  csi.storage.k8s.io/controller-expand-secret-name: quobyte-admin-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: default
+  csi.storage.k8s.io/provisioner-secret-name: quobyte-admin-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: default
+  group: root
+  quobyteConfig: RF3
+  quobyteTenant: My Tenant
+  user: www-data
+provisioner: csi.quobyte.com
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

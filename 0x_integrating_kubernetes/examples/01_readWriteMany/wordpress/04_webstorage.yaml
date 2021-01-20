@@ -4,7 +4,7 @@ metadata:
   name: webstorage
 spec:
   accessModes: [ "ReadWriteMany" ]
-  storageClassName: quobyte-rf3
+  storageClassName: quobyte-rf3-delete
   resources:
     requests:
       storage: 2Gi
