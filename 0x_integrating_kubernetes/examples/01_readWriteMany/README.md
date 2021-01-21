@@ -1,7 +1,7 @@
 # Scaling dynamic content
 
 This example shows how you can solve a common problem that arises around
-"user generated content" or, in more abstract words, dynamic content. 
+"user generated content" or, in more general words, dynamic content. 
 
 If you scale out applications this works pretty well for stateless applications: 
 You just double the number of running pods.
