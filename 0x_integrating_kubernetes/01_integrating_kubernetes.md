@@ -235,11 +235,11 @@ pvc-8da51d22-2400-49d3-ba73-dfdc4e97b8be  My Tenant  0 bytes        -           
 
 As you can see the Volume is getting created and usable from Kubernetes now!
 
+If you want you can watch the CSI framework doing its work:
+
+```
+kubectl logs quobyte-csi-controller-csi-quobyte-com-0 -n kube-system -c csi-provisioner -f
+```
+
 In the next chapter we will show how to create and control different storage classes.
-
-
-
-todo: create a service for all API endpoints to balance them.
-
-
 
