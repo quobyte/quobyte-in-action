@@ -66,3 +66,13 @@ From a Kubernetes point of view it adds no complexity to your setup: Service dis
 Èt voila: Now you have a setup where each layer of resource consumption (CPU/Storage) can be scaled individually.
 
 Code contained in this chapter will give you a practical demonstration using wordpress as an example.
+
+
+Literature:
+* The use of stateful sets in Kubernetes:
+https://kubernetes.io/blog/2016/12/statefulset-run-scale-stateful-applications-in-kubernetes/
+
+* Scaling Wordpress in Kubernetes:
+https://engineering.bitnami.com/articles/scaling-wordpress-in-kubernetes.html
+
+
