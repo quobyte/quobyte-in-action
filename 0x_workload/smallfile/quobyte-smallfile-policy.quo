@@ -1,0 +1,34 @@
+policy_rule {
+  name: "smallfile"
+  description: "A combined rule: place files on disks tagged as 'fast' and enable deferred writeback"
+  enabled: true
+  scope {
+    global: true
+  }
+  policies {
+    file_tag_based_placement {
+      required_tag: "fast"
+    }
+    replication_redundancy_details {
+      file_structure {
+        block_size_bytes: 4096
+        object_size_bytes: 8388608
+        segment_size_bytes: 171798691840
+      }
+      distribution_schema {
+        data_stripe_count: 4
+        striping_method: OBJECT_LEVEL
+      }
+      replication_factor: 3
+    }
+    deferred_writeback {
+      defer_writeback_after_close_up_to_s: 5
+    }
+    disk_io {
+      priority: HIGH
+    }
+    client_cache {
+      mode: ENABLE_ALWAYS
+    }
+  }
+}
