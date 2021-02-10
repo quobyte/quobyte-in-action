@@ -4,8 +4,9 @@
 qmgmt policy-rule import quobyte-smallfile-policy.quo
 
 # tag devices with tag "fast":
+devicelist=$(qmgmt device list | grep  "256 GB" | cut -d" " -f1)
 for device in $devicelist; do
- device update add-tags ${device_id} "fast"
+ qmgmt device update add-tags ${device} "fast"
 done
 
 # create a volume for testing
