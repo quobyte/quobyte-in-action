@@ -1,0 +1,101 @@
+# extended LDIF
+#
+# LDAPv3
+# base <dc=myorganization,dc=org> with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# myorganization.org
+dn: dc=myorganization,dc=org
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: My Organiszation
+dc: myorganization
+
+# myorga-east, myorganization.org
+dn: ou=myorga-east,dc=myorganization,dc=org
+ou: myorga-east
+objectClass: top
+objectClass: organizationalUnit
+
+# myorga-west, myorganization.org
+dn: ou=myorga-west,dc=myorganization,dc=org
+ou: myorga-west
+objectClass: top
+objectClass: organizationalUnit
+
+# groups, myorga-west, myorganization.org
+dn: ou=groups,ou=myorga-west,dc=myorganization,dc=org
+objectClass: top
+objectClass: organizationalUnit
+ou: groups
+
+# users, myorga-west, myorganization.org
+dn: ou=users,ou=myorga-west,dc=myorganization,dc=org
+objectClass: top
+objectClass: organizationalUnit
+ou: users
+
+# exampleuser, users, myorga-west, myorganization.org
+dn: uid=exampleuser,ou=users,ou=myorga-west,dc=myorganization,dc=org
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+givenName: exampleuser
+employeeNumber: 123456
+displayName: example user with group membership stored in group object
+cn: Example
+sn: User
+uid: exampleuser
+userPassword:: ZXhhbXBsZVBhc3N3b3Jk
+
+# storageadmin, users, myorga-west, myorganization.org
+dn: uid=storageadmin,ou=users,ou=myorga-west,dc=myorganization,dc=org
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+givenName: storageadmin
+employeeNumber: 123
+displayName: Storageadmin. Gets access via group membership 
+cn: Storage
+sn: Admin
+uid: storageadmin
+userPassword:: ZXhhbXBsZVBhc3N3b3Jk
+
+# storageuser, groups, myorga-west, myorganization.org
+dn: cn=storageuser,ou=groups,ou=myorga-west,dc=myorganization,dc=org
+objectClass: top
+objectClass: groupOfNames
+cn: storageuser
+description: unprivileged storage users
+member: uid=exampleuser,ou=users,ou=myorga-west,dc=myorganization,dc=org
+userPassword:: ZXhhbXBsZVBhc3N3b3Jk
+
+# storageadmins, groups, myorga-west, myorganization.org
+dn: cn=storageadmins,ou=groups,ou=myorga-west,dc=myorganization,dc=org
+objectClass: top
+objectClass: groupOfNames
+cn: storageadmins
+description: Members of this group should get admin access to Quobyte
+member: uid=storageadmin,ou=users,ou=myorga-west,dc=myorganization,dc=org
+
+# systemusers, myorga-west, myorganization.org
+dn: ou=systemusers,ou=myorga-west,dc=myorganization,dc=org
+objectClass: top
+objectClass: organizationalUnit
+ou: systemusers
+
+# quobyte, systemusers, myorga-west, myorganization.org
+dn: cn=quobyte,ou=systemusers,ou=myorga-west,dc=myorganization,dc=org
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: quobyte
+description: bind user that can search a given (sub-) tree and read group attr
+ ibutes
+userPassword:: ZXhhbXBsZVBhc3N3b3Jk
+
+
