@@ -44,11 +44,15 @@ objectClass: person
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: organizationalPerson
+objectClass: posixAccount
 givenName: exampleuser
 employeeNumber: 123456
 displayName: example user with group membership stored in group object
 cn: Example
 sn: User
+gidNumber: 1234
+uidNumber: 1234
+homeDirectory: /home/exampleuser
 uid: exampleuser
 userPassword:: ZXhhbXBsZVBhc3N3b3Jk
 
@@ -58,12 +62,16 @@ objectClass: person
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: organizationalPerson
+objectClass: posixAccount
 givenName: storageadmin
 employeeNumber: 123
 displayName: Storageadmin. Gets access via group membership 
 cn: Storage
 sn: Admin
 uid: storageadmin
+gidNumber: 1234
+uidNumber: 1234
+homeDirectory: /home/storageadmin
 userPassword:: ZXhhbXBsZVBhc3N3b3Jk
 
 # storageuser, groups, myorga-west, myorganization.org
