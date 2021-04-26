@@ -1,12 +1,3 @@
-# extended LDIF
-#
-# LDAPv3
-# base <dc=myorganization,dc=org> with scope subtree
-# filter: (objectclass=*)
-# requesting: ALL
-#
-
-# myorganization.org
 dn: dc=myorganization,dc=org
 objectClass: top
 objectClass: dcObject
@@ -14,37 +5,23 @@ objectClass: organization
 o: My Organiszation
 dc: myorganization
 
-# myorga-east, myorganization.org
-dn: ou=myorga-east,dc=myorganization,dc=org
-ou: myorga-east
-objectClass: top
-objectClass: organizationalUnit
-
-# myorga-west, myorganization.org
-dn: ou=myorga-west,dc=myorganization,dc=org
-ou: myorga-west
-objectClass: top
-objectClass: organizationalUnit
-
-# groups, myorga-west, myorganization.org
-dn: ou=groups,ou=myorga-west,dc=myorganization,dc=org
+dn: ou=groups,dc=myorganization,dc=org
 objectClass: top
 objectClass: organizationalUnit
 ou: groups
 
-# users, myorga-west, myorganization.org
-dn: ou=users,ou=myorga-west,dc=myorganization,dc=org
+dn: ou=users,dc=myorganization,dc=org
 objectClass: top
 objectClass: organizationalUnit
 ou: users
 
-# exampleuser, users, myorga-west, myorganization.org
-dn: uid=exampleuser,ou=users,ou=myorga-west,dc=myorganization,dc=org
+dn: uid=exampleuser,ou=users,dc=myorganization,dc=org
 objectClass: person
 objectClass: top
 objectClass: inetOrgPerson
 objectClass: organizationalPerson
 objectClass: posixAccount
+uid: exampleuser
 givenName: exampleuser
 employeeNumber: 123456
 displayName: example user with group membership stored in group object
@@ -53,11 +30,60 @@ sn: User
 gidNumber: 1234
 uidNumber: 1234
 homeDirectory: /home/exampleuser
-uid: exampleuser
 userPassword:: ZXhhbXBsZVBhc3N3b3Jk
 
-# storageadmin, users, myorga-west, myorganization.org
-dn: uid=storageadmin,ou=users,ou=myorga-west,dc=myorganization,dc=org
+dn: uid=alpha,ou=users,dc=myorganization,dc=org
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: posixAccount
+uid: alpha
+givenName: alpha
+employeeNumber: 123456
+displayName: example user with group membership stored in group object
+cn: Example
+sn: User
+gidNumber: 1234
+uidNumber: 1234
+homeDirectory: /home/alpha
+userPassword:: ZXhhbXBsZVBhc3N3b3Jk
+
+dn: uid=beta,ou=users,dc=myorganization,dc=org
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: posixAccount
+uid: beta
+givenName: beta
+employeeNumber: 123456
+displayName: example user with group membership stored in group object
+cn: Example
+sn: User
+gidNumber: 512
+uidNumber: 512
+homeDirectory: /home/beta
+userPassword:: ZXhhbXBsZVBhc3N3b3Jk
+
+dn: uid=gamma,ou=users,dc=myorganization,dc=org
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: posixAccount
+uid: gamma
+givenName: gamma
+employeeNumber: 123456
+displayName: example user with group membership stored in group object
+cn: Example
+sn: User
+gidNumber: 1001
+uidNumber: 1001
+homeDirectory: /home/gamma
+userPassword:: ZXhhbXBsZVBhc3N3b3Jk
+
+dn: uid=storageadmin,ou=users,dc=myorganization,dc=org
 objectClass: person
 objectClass: top
 objectClass: inetOrgPerson
@@ -74,31 +100,43 @@ uidNumber: 1234
 homeDirectory: /home/storageadmin
 userPassword:: ZXhhbXBsZVBhc3N3b3Jk
 
-# storageuser, groups, myorga-west, myorganization.org
-dn: cn=storageuser,ou=groups,ou=myorga-west,dc=myorganization,dc=org
+dn: cn=sharedStorage,ou=groups,dc=myorganization,dc=org
 objectClass: top
 objectClass: groupOfNames
-cn: storageuser
-description: unprivileged storage users
-member: uid=exampleuser,ou=users,ou=myorga-west,dc=myorganization,dc=org
-userPassword:: ZXhhbXBsZVBhc3N3b3Jk
+cn: sharedStorage
+description: These group members can share data
+member: uid=alpha,ou=users,dc=myorganization,dc=org
+member: uid=beta,ou=users,dc=myorganization,dc=org
+member: uid=gamma,ou=users,dc=myorganization,dc=org
 
-# storageadmins, groups, myorga-west, myorganization.org
-dn: cn=storageadmins,ou=groups,ou=myorga-west,dc=myorganization,dc=org
+dn: cn=east,ou=groups,dc=myorganization,dc=org
+objectClass: top
+objectClass: groupOfNames
+cn: east
+description: group members can work on shared storage "east" 
+member: uid=alpha,ou=users,dc=myorganization,dc=org
+
+dn: cn=west,ou=groups,dc=myorganization,dc=org
+objectClass: top
+objectClass: groupOfNames
+cn: west
+description: group members can work on shared storage "west" 
+member: uid=beta,ou=users,dc=myorganization,dc=org
+member: uid=gamma,ou=users,dc=myorganization,dc=org
+
+dn: cn=storageadmins,ou=groups,dc=myorganization,dc=org
 objectClass: top
 objectClass: groupOfNames
 cn: storageadmins
 description: Members of this group should get admin access to Quobyte
-member: uid=storageadmin,ou=users,ou=myorga-west,dc=myorganization,dc=org
+member: uid=storageadmin,ou=users,dc=myorganization,dc=org
 
-# systemusers, myorga-west, myorganization.org
-dn: ou=systemusers,ou=myorga-west,dc=myorganization,dc=org
+dn: ou=systemusers,dc=myorganization,dc=org
 objectClass: top
 objectClass: organizationalUnit
 ou: systemusers
 
-# quobyte, systemusers, myorga-west, myorganization.org
-dn: cn=quobyte,ou=systemusers,ou=myorga-west,dc=myorganization,dc=org
+dn: cn=quobyte,ou=systemusers,dc=myorganization,dc=org
 objectClass: simpleSecurityObject
 objectClass: organizationalRole
 cn: quobyte
