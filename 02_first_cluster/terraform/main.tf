@@ -45,7 +45,7 @@ resource "google_compute_instance" "core" {
  }
 
  // install necessary software
- metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" ? var.startupscript_other_rpmflavor : var.startupscript_other_debflavor)
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" ? var.startupscript_core_rpmflavor : var.startupscript_core_debflavor)
  
  network_interface {
    network = "default"
