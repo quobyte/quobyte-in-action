@@ -45,8 +45,7 @@ resource "google_compute_instance" "core" {
  }
 
  // install necessary software
- //metadata_startup_script = var.startupscript_core_debflavor
- metadata_startup_script = var.startupscript_core_rpmflavor
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" ? var.startupscript_other_rpmflavor : var.startupscript_other_debflavor)
  
  network_interface {
    network = "default"
@@ -92,8 +91,7 @@ resource "google_compute_instance" "dataserver" {
  ]
 
  // install necessary software
- //metadata_startup_script = var.startupscript_other_debflavor
- metadata_startup_script = var.startupscript_other_rpmflavor
+ metadata_startup_script = (var.image_dataserver == "centos-cloud/centos-7" ? var.startupscript_other_rpmflavor : var.startupscript_other_debflavor)
 
  network_interface {
    network = "default"
@@ -124,8 +122,7 @@ resource "google_compute_instance" "client" {
  }
 
 // install needed software 
- //metadata_startup_script = var.startupscript_other_debflavor
- metadata_startup_script = var.startupscript_other_rpmflavor
+ metadata_startup_script = (var.image_clientserver == "centos-cloud/centos-7" ? var.startupscript_other_rpmflavor : var.startupscript_other_debflavor)
 
  network_interface {
    network = "default"
