@@ -1,0 +1,6 @@
+
+dn: cn=sharedStorage,ou=groups,dc=myorganization,dc=org
+changetype: add
+add: member
+member: uid=delta,ou=users,dc=myorganization,dc=org
+
