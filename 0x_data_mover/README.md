@@ -43,7 +43,7 @@ job: {
 This job can then be scheduled with 
 
 ```
-qmgmt files copy <jobDescriptionFile>
+qmgmt files copy <jobDefinitionFile>
 
 # Documentation:
 https://support.quobyte.com/docs/16/latest/data_mover.html
