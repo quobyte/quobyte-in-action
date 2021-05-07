@@ -41,11 +41,14 @@ resource "google_compute_instance" "core" {
  ]
 
  metadata = {
-   ssh-keys = "deploy:${file("~/.ssh/id_rsa.pub")}"
+   "ssh-keys" = <<EOT
+   deploy:${file("~/.ssh/id_rsa.pub")}
+   deploy:${file("~/.ssh/additional_key.pub")}
+EOT
  }
 
  // install necessary software
- metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" ? var.startupscript_core_rpmflavor : var.startupscript_core_debflavor)
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? var.startupscript_core_rpmflavor : var.startupscript_core_debflavor)
  
  network_interface {
    network = "default"
@@ -82,7 +85,10 @@ resource "google_compute_instance" "dataserver" {
  } 
 
  metadata = {
-   ssh-keys = "deploy:${file("~/.ssh/id_rsa.pub")}"
+   "ssh-keys" = <<EOT
+   deploy:${file("~/.ssh/id_rsa.pub")}
+   deploy:${file("~/.ssh/additional_key.pub")}
+EOT
  }
 
  depends_on = [
@@ -91,7 +97,7 @@ resource "google_compute_instance" "dataserver" {
  ]
 
  // install necessary software
- metadata_startup_script = (var.image_dataserver == "centos-cloud/centos-7" ? var.startupscript_other_rpmflavor : var.startupscript_other_debflavor)
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? var.startupscript_core_rpmflavor : var.startupscript_core_debflavor)
 
  network_interface {
    network = "default"
@@ -118,11 +124,14 @@ resource "google_compute_instance" "client" {
  }
 
  metadata = {
-   ssh-keys = "deploy:${file("~/.ssh/id_rsa.pub")}"
+   "ssh-keys" = <<EOT
+   deploy:${file("~/.ssh/id_rsa.pub")}
+   deploy:${file("~/.ssh/additional_key.pub")}
+EOT
  }
 
 // install needed software 
- metadata_startup_script = (var.image_clientserver == "centos-cloud/centos-7" ? var.startupscript_other_rpmflavor : var.startupscript_other_debflavor)
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? var.startupscript_core_rpmflavor : var.startupscript_core_debflavor)
 
  network_interface {
    network = "default"
