@@ -48,7 +48,7 @@ EOT
  }
 
  // install necessary software
- metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? var.startupscript_core_rpmflavor : var.startupscript_core_debflavor)
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? local.startupscript_core_rpmflavor : local.startupscript_core_debflavor)
  
  network_interface {
    network = "default"
@@ -97,7 +97,7 @@ EOT
  ]
 
  // install necessary software
- metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? var.startupscript_core_rpmflavor : var.startupscript_core_debflavor)
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? local.startupscript_core_rpmflavor : local.startupscript_core_debflavor)
 
  network_interface {
    network = "default"
@@ -131,7 +131,7 @@ EOT
  }
 
 // install needed software 
- metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? var.startupscript_core_rpmflavor : var.startupscript_core_debflavor)
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" ? local.startupscript_core_rpmflavor : local.startupscript_core_debflavor)
 
  network_interface {
    network = "default"

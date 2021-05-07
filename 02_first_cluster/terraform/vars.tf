@@ -21,16 +21,23 @@ variable "cluster_name" {
   default = "smallscale"
 }
 
+variable "git_repository" {
+  type = string
+  //default = "https://github.com/quobyte/ansible-deploy-3.x.git /home/deploy/ansible-deploy"
+  default = "git@github.com:jan379/quobyte-ansible-core.git"
+}
 variable "image_coreserver" {
   type = string
   //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-1804-lts"
   //default = "debian-cloud/debian-10"
-  default = "centos-cloud/centos-8"
+  default = "centos-cloud/centos-7"
+  //default = "rhel-cloud/rhel-8"
 }
 
 variable "number_coreserver" {
   type = number
-  default = 4
+  default = 3
 }
 
 variable "disk-type_coreserver" {
@@ -46,9 +53,9 @@ variable "flavor_coreserver" {
 
 variable "image_dataserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "debian-cloud/debian-10"
-  default = "centos-cloud/centos-8"
+  //default = "centos-cloud/centos-8"
 }
 
 variable "datadisk_size-a" {
@@ -95,19 +102,14 @@ variable "flavor_clientserver" {
 
 variable "image_clientserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "debian-cloud/debian-10"
-  default = "centos-cloud/centos-8"
+  //default = "centos-cloud/centos-8"
 }
 
-variable "startupscript_core_rpmflavor" {
-  type = string
-  default = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone https://github.com/quobyte/ansible-deploy-3.x.git /home/deploy/ansible-deploy"
-}
-
-variable "startupscript_core_debflavor" {
-  type = string
-  default = "apt-get update; apt-get install -y wget ansible git python; git clone https://github.com/quobyte/ansible-deploy-3.x.git /home/deploy/ansible-deploy"
+locals {
+  startupscript_core_rpmflavor = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone ${var.git_repository} /home/deploy/ansible-deploy"
+  startupscript_core_debflavor = "apt-get update; apt-get install -y wget ansible git python; git clone ${var.git_repository} /home/deploy/ansible-deploy"
 }
 
 variable "startupscript_other_debflavor" {
