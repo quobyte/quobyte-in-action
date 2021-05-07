@@ -1,5 +1,7 @@
 # Registry entries.
 registry: ${registry_ips}
+# API endpoint to talk to
+api_service: ${api_ip}
 # A valid DNS entry for the S3 endpoint
 s3_endpoint: s3.quobyte.local
 # Define your storage network
@@ -12,3 +14,5 @@ metadatadevice: sdb
 clustername: ${cluster_name}
 # How many servers should run Quobyte core services?
 clustersize: 3
+# If you set a repo id you probably want to install Quobyte 2.x
+## repo_id: 2dxxxxc327Cfyyyasfd

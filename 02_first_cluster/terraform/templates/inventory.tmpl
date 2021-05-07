@@ -1,12 +1,32 @@
-[cluster]
-${coreserver_ip}
+all:
+  vars: 
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  children: 
+   quobyte-servers:
+    hosts:
+      ${coreserver_ip}:
+      ${dataserver_ip}:
+   webconsole-services:
+    hosts:
+      ${coreserver_ip}:
+   api-services:
+    hosts:
+      ${coreserver_ip}:
+   registry-services:
+    hosts:
+      ${coreserver_ip}:
+   metadata-services:
+    hosts:
+      ${coreserver_ip}:
+   data-services:
+    hosts:
+      ${coreserver_ip}:
+      ${dataserver_ip}:
+   s3-services:
+    hosts:
+      ${coreserver_ip}:
 
-[dataserver]
-${dataserver_ip}
-
-[clients]
-${client_ip}
-
-[all:vars]
-ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+   clients: 
+    hosts:
+      ${client_ip}
 
