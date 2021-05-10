@@ -23,16 +23,16 @@ variable "cluster_name" {
 
 variable "git_repository" {
   type = string
-  //default = "https://github.com/quobyte/ansible-deploy-3.x.git /home/deploy/ansible-deploy"
-  default = "git@github.com:jan379/quobyte-ansible-core.git"
+  //default = "https://github.com/quobyte/ansible-deploy-3.x.git"
+  default = "https://github.com/jan379/quobyte-ansible-core.git"
 }
 variable "image_coreserver" {
   type = string
   //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "ubuntu-os-cloud/ubuntu-1804-lts"
   //default = "debian-cloud/debian-10"
-  default = "centos-cloud/centos-7"
-  //default = "rhel-cloud/rhel-8"
+  //default = "centos-cloud/centos-7"
+  default = "rhel-cloud/rhel-7"
 }
 
 variable "number_coreserver" {
