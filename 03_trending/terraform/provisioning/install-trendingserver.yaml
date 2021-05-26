@@ -5,14 +5,12 @@
     - vars/trendingserver-vars.yaml 
   become: yes
   tasks:
-    - name: Install packages Debian-Flavor 
+    - name: Install Prometheus packages Debian-Flavor 
       apt:
-        name: "{{ packages }}"
+        name: prometheus 
         state: present
         update_cache: yes
-      vars:
-        packages:
-        - prometheus
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     - name: Copy Prometheus config
       template:
@@ -26,4 +24,34 @@
         state: restarted
         enabled: yes
 
+    - name: Add Grafana repository signing key
+      apt_key:
+        url: https://packages.grafana.com/gpg.key 
+        state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
+    - name: Add grafana apt repository to sources list
+      apt_repository:
+        repo: deb https://packages.grafana.com/oss/deb stable main
+        state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+    - name: Install Grafana package Debian-Flavor 
+      apt:
+        name: grafana
+        state: present
+        update_cache: yes
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+    - name: Write out Grafana Prometheus datasource 
+      template:
+        src: templates/grafana_prometheus_source.yaml
+        dest: "/etc/grafana/provisioning/datasources/prometheus.yaml"
+
+    - name: Enable Grafana services
+      service:
+        enabled: yes
+        state: started
+        name: grafana-server
+
+# todo: import quobyte dashboard
