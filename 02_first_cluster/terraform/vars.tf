@@ -7,7 +7,8 @@ variable "gcloud_project" {
 
 variable "cluster_region" {
   type = string
-  default = "us-west1-a"
+  //default = "us-west1-a"
+  default = "europe-west4-b"
 }
 
 variable "net_cidr" {
@@ -18,7 +19,7 @@ variable "net_cidr" {
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
-  default = "smallscale"
+  default = "betacluster"
 }
 
 variable "git_repository" {
@@ -28,11 +29,11 @@ variable "git_repository" {
 }
 variable "image_coreserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "ubuntu-os-cloud/ubuntu-1804-lts"
   //default = "debian-cloud/debian-10"
-  //default = "centos-cloud/centos-7"
-  default = "rhel-cloud/rhel-7"
+  // default = "centos-cloud/centos-7"
+  //default = "rhel-cloud/rhel-7"
 }
 
 variable "number_coreserver" {
@@ -82,7 +83,7 @@ variable "disk-type_dataserver-b" {
 
 variable "number_dataserver" {
   type = number
-  default = 0
+  default = 1 
 }
 
 variable "flavor_dataserver" {
@@ -108,8 +109,8 @@ variable "image_clientserver" {
 }
 
 locals {
-  startupscript_core_rpmflavor = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone ${var.git_repository} /home/deploy/ansible-deploy"
-  startupscript_core_debflavor = "apt-get update; apt-get install -y wget ansible git python; git clone ${var.git_repository} /home/deploy/ansible-deploy"
+  startupscript_core_rpmflavor = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone ${var.git_repository} /home/deploy/provisioning; chown deploy: /home/deploy/provisioning"
+  startupscript_core_debflavor = "apt-get update; apt-get install -y wget ansible git python; git clone ${var.git_repository} /home/deploy/provisioning; chown deploy: /home/deploy/provisioning"
 }
 
 variable "startupscript_other_debflavor" {
