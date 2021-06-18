@@ -11,7 +11,6 @@
 ...
 ...
 enabled_backends = quobyte
-default_volume_type = quobyte
 
 [quobyte]
 volume_driver = cinder.volume.drivers.quobyte.QuobyteDriver
@@ -33,6 +32,7 @@ chown -R stack: /mnt/openstack-volumes
 * restart cinder
 ```
 systemctl restart devstack@c-vol.service
+systemctl restart devstack@c-api.service
 ```
 
 * watch cinder while trying to create a volume:
@@ -40,4 +40,19 @@ systemctl restart devstack@c-vol.service
 journalctl -fu devstack@c-vol.service
 ```
 
+
+## Nova Integration
+mkdir -p /mnt/openstack-vms
+chown -R stack: /mnt/openstack-vms
+
+## /etc/nova/nova.conf
+
+```
+[DEFAULT]
+quobyte_client_cfg = /etc/quobyte/client.cfg
+quobyte_mount_point_base = /mnt/openstack-vms
+.
+.
+.
+```
 
