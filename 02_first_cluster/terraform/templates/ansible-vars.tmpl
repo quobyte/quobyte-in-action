@@ -9,9 +9,15 @@ network: ${net_cidr}
 # Where should volumes be automatically mounted?
 mountpoint: /quobyte
 # Select a dedicated device for the metadata service
-metadatadevice: sdb
+metadatadevices: sdb
 # Name of your Quobyte cluster
 clustername: ${cluster_name}
+# Quobyte admin user
+admin_user: storageadmin
+# Quobyte admin user password. Consider ansible vault etc.
+admin_password: changeMe
+# Path to license file
+license_file: /home/deploy/license.txt
 # How many servers should run Quobyte core services?
 clustersize: 3
 # If you set a repo id you probably want to install Quobyte 2.x
