@@ -2,27 +2,27 @@ all:
   vars: 
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   children: 
-   quobyte-servers:
+   quobyteservers:
     hosts:
       ${coreserver_ip}:
       ${dataserver_ip}:
-   webconsole-services:
+   webconsoleservices:
     hosts:
       ${coreserver_ip}:
-   api-services:
+   apiservices:
     hosts:
       ${coreserver_ip}:
-   registry-services:
+   registryservices:
     hosts:
       ${coreserver_ip}:
-   metadata-services:
+   metadataservices:
     hosts:
       ${coreserver_ip}:
-   data-services:
+   dataservices:
     hosts:
       ${coreserver_ip}:
       ${dataserver_ip}:
-   s3-services:
+   s3services:
     hosts:
       ${coreserver_ip}:
 
