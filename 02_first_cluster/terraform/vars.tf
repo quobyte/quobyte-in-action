@@ -19,21 +19,22 @@ variable "net_cidr" {
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
-  default = "betacluster"
+  default = "qb-regtest"
 }
 
 variable "git_repository" {
   type = string
   //default = "https://github.com/quobyte/ansible-deploy-3.x.git"
-  default = "https://github.com/jan379/quobyte-ansible-core.git"
+  default = "https://github.com/quobyte/quobyte-ansible.git"
 }
 variable "image_coreserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "ubuntu-os-cloud/ubuntu-1804-lts"
   //default = "debian-cloud/debian-10"
-  // default = "centos-cloud/centos-7"
+  default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-7"
+  //default = "rhel-cloud/rhel-8"
 }
 
 variable "number_coreserver" {
@@ -54,9 +55,10 @@ variable "flavor_coreserver" {
 
 variable "image_dataserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "debian-cloud/debian-10"
-  //default = "centos-cloud/centos-8"
+  default = "centos-cloud/centos-7"
+  //default = "rhel-cloud/rhel-7"
 }
 
 variable "datadisk_size-a" {
@@ -93,7 +95,7 @@ variable "flavor_dataserver" {
 
 variable "number_clientserver" {
   type = number
-  default = 0
+  default = 1
 }
 
 variable "flavor_clientserver" {
@@ -106,10 +108,13 @@ variable "image_clientserver" {
   default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "debian-cloud/debian-10"
   //default = "centos-cloud/centos-8"
+  //default = "rhel-cloud/rhel-8"
 }
 
 locals {
+  startupscript_core_rhel = "dnf install -y git; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
   startupscript_core_rpmflavor = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
+  ##startupscript_core_rpmflavor = "dnf install -y git ; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
   startupscript_core_debflavor = "apt-get update; apt-get install -y wget ansible git python; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
 }
 
