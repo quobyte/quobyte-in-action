@@ -7,7 +7,6 @@ job: {
   destination: {
     quobyte: {
       volume: "0c4b1be1-0b11-475f-a0dc-2bb02f5c1555"
-      registry: "same-registry-as-source.mycompany.tld"
     }
   }
   filter: {
