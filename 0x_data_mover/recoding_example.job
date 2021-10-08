@@ -12,7 +12,7 @@ job: {
   }
   filter: {
     type: LAST_ACCESS_AGE_S
-    operator: SMALLER_THAN
+    operator: LARGER_THAN
     value: 3600
   }
 }
