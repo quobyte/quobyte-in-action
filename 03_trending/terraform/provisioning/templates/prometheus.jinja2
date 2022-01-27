@@ -1,38 +1,54 @@
+# my global config
 global:
-  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  scrape_interval: 60s 		# On large Quobyte clusters something like 180s works better for medium-size Prometheus hardware.
+  evaluation_interval: 60s 	# Same value as scraping interval.
   # scrape_timeout is set to the global default (10s).
-  # Attach these labels to any time series or alerts when communicating with
-  # external systems (federation, remote storage, Alertmanager).
-  external_labels:
-      monitor: 'example'
+  scrape_timeout: 20s		# It can take some time to scrape a few thousand targets with a lot of metrics.
+
+# Alertmanager configuration
 alerting:
   alertmanagers:
-  - static_configs:
-    - targets: ['localhost:9093']
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
+  - "capacity_aggregated.yaml"	# We aggregate all our storage devices capacity to have them accessible as a fast and simple metric
+  - "usage_aggregated.yaml"	# We aggregate all our storage devices usage to have them accessible as a fast and simple metric
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
-    # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
-    scrape_timeout: 5s
+  - job_name: "prometheus"
+
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
+
     static_configs:
-      - targets: ['localhost:9090']
-  - job_name: node
-    # If prometheus-node-exporter is installed, grab stats about the local
-    # machine by default.
+      - targets: ["localhost:9090"]
+  # Comment that job section out if you do not have a node exporter running on the Prometheus node
+  - job_name: "node exporter"
     static_configs:
-            - targets: ['localhost:9100']
-  - job_name: testing
+      - targets: ["localhost:9100"]
+  # This is our Quobyte cluster.
+  - job_name: "quobyte"
     metrics_path: /prometheus
     consul_sd_configs:
       - server: {{ registry }}:7871
-        datacenter: {{ clustername }}
+        datacenter: large
+# By defining single services we want to scrape we can for example decide *not* to scrape client data.
+# If you want to scrape all data from all services simply leave the services section out.
+        services:
+          - quobyte-registry	
+          - quobyte-api		
+          - quobyte-metadata	
+          - quobyte-data	
+          - quobyte-webconsole	
+##          - quobyte-clients	
+# If you are running multiple Quobyte clusters it is convenient to have the label "quobyte_cluster" available.
+# This is also used in the Grafana Quobyte dashboard.
+# The same applies for service_type and instance labels.
     relabel_configs:
       - source_labels: [job]
         target_label: quobyte_cluster
@@ -40,10 +56,14 @@ scrape_configs:
         target_label: service_type
       - source_labels: [__meta_consul_service_address]
         target_label: instance
+# "executor" metrics are memory hungry and only necessary for debugging purposes, so we drop them.
     metric_relabel_configs:
-      - action: labeldrop
-        regex: 'service_uuid|client_uuid'
-      - action: drop
-        source_labels: [__name__]
-        regex: '.*client:top_.*'
+      - source_labels: [executor]
+        regex: '.+'
+        action: drop
+# Latency buckets are very expensive historgrams, so you can skip storing them.
+      - source_labels: [__name__]
+        regex: '.*roundtrip_latency_bucket.*'
+        action: drop
+
 

@@ -1,0 +1,12 @@
+# For long-term displays we are only interested in a sum across all devices in our cluster.
+# Aggregated records speed up querying for these metrics a lot.
+groups:
+  - name: HDD Capacity
+    rules:
+    - record: stfc:usage_hdd:sum
+      expr: sum(device:usage{device_hardware_type="HDD",service_type="quobyte-data"}) 
+
+  - name: SSD Capacity
+    rules:
+    - record: stfc:usage_ssd:sum
+      expr: sum(device:usage{device_hardware_type="SSD",service_type="quobyte-data"})
