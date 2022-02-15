@@ -4,8 +4,8 @@ resource "local_file" "AnsibleInventory" {
  {
   coreserver_ip = join(":\n      ", google_compute_instance.core.*.network_interface.0.network_ip) 
   coreserver_ips = google_compute_instance.core.*.network_interface.0.network_ip 
-  dataserver_ip = join("\n", google_compute_instance.dataserver.*.network_interface.0.network_ip)
-  client_ip = join("\n", google_compute_instance.client.*.network_interface.0.network_ip)
+  dataserver_ip = join(":\n", google_compute_instance.dataserver.*.network_interface.0.network_ip)
+  client_ip = join(":\n", google_compute_instance.client.*.network_interface.0.network_ip)
  }
  )
  filename = "provisioning/ansible-inventory"
