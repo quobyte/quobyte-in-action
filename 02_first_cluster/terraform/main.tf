@@ -34,10 +34,16 @@ resource "google_compute_instance" "core" {
   source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-coredatadisk-${count.index}-b"
  } 
 
+ attached_disk {
+  source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-coredatadisk-${count.index}-c"
+ } 
+
+
  depends_on = [
   google_compute_disk.coreserver-metadata-a,
   google_compute_disk.coreserver-data-a,
-  google_compute_disk.coreserver-data-b
+  google_compute_disk.coreserver-data-b,
+  google_compute_disk.coreserver-data-c
  ]
 
  metadata = {
@@ -84,6 +90,11 @@ resource "google_compute_instance" "dataserver" {
   source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-datadisk-${count.index}-b"
  } 
 
+ attached_disk {
+  source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-datadisk-${count.index}-c"
+ } 
+
+
  metadata = {
    "ssh-keys" = <<EOT
    deploy:${file("~/.ssh/id_rsa.pub")}
@@ -93,7 +104,8 @@ EOT
 
  depends_on = [
   google_compute_disk.dataserver-data-a,
-  google_compute_disk.dataserver-data-b
+  google_compute_disk.dataserver-data-b,
+  google_compute_disk.dataserver-data-c
  ]
 
  // install necessary software
@@ -146,40 +158,58 @@ EOT
 resource "google_compute_disk" "coreserver-data-a" {
    count = var.number_coreserver
    name  = "${var.cluster_name}-coredatadisk-${count.index}-a"
-   size  = var.datadisk_size-a
-   type  = var.disk-type_dataserver-a 
+   size  = var.datadisk_size-ssd
+   type  = var.disk-type_dataserver-ssd 
    zone  = var.cluster_region
 }
 
 resource "google_compute_disk" "coreserver-data-b" {
    count = var.number_coreserver
    name  = "${var.cluster_name}-coredatadisk-${count.index}-b"
-   size  = var.datadisk_size-b
-   type  = var.disk-type_dataserver-b
+   size  = var.datadisk_size-hdd
+   type  = var.disk-type_dataserver-hdd
    zone  = var.cluster_region
 }
+
+resource "google_compute_disk" "coreserver-data-c" {
+   count = var.number_coreserver
+   name  = "${var.cluster_name}-coredatadisk-${count.index}-c"
+   size  = var.datadisk_size-hdd
+   type  = var.disk-type_dataserver-hdd
+   zone  = var.cluster_region
+}
+
 
 resource "google_compute_disk" "dataserver-data-a" {
    count = var.number_dataserver
    name  = "${var.cluster_name}-datadisk-${count.index}-a"
-   size  = var.datadisk_size-a
-   type  = var.disk-type_dataserver-b 
+   size  = var.datadisk_size-ssd
+   type  = "pd-ssd"
    zone  = var.cluster_region
 }
 
 resource "google_compute_disk" "dataserver-data-b" {
    count = var.number_dataserver
    name  = "${var.cluster_name}-datadisk-${count.index}-b"
-   size  = var.datadisk_size-b
-   type  = "pd-ssd"
+   size  = var.datadisk_size-hdd
+   type  = var.disk-type_dataserver-hdd 
    zone  = var.cluster_region
 }
+
+resource "google_compute_disk" "dataserver-data-c" {
+   count = var.number_dataserver
+   name  = "${var.cluster_name}-datadisk-${count.index}-c"
+   size  = var.datadisk_size-hdd
+   type  = var.disk-type_dataserver-hdd 
+   zone  = var.cluster_region
+}
+
 
 resource "google_compute_disk" "coreserver-metadata-a" {
   count = var.number_coreserver
   name  = "${var.cluster_name}-metadatadisk-${count.index}-a"
   size  = 50
-  type  = "pd-ssd"
+  type  = var.disk-type_dataserver-ssd 
   zone  = var.cluster_region
 }
 
