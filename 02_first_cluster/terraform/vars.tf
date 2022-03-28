@@ -19,7 +19,7 @@ variable "net_cidr" {
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
-  default = "q101"
+  default = "stfc-policy"
 }
 
 variable "git_repository" {
@@ -29,18 +29,19 @@ variable "git_repository" {
 }
 variable "image_coreserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "ubuntu-os-cloud/ubuntu-1804-lts"
-  //default = "debian-cloud/debian-10"
+  //default = "debian-cloud/debian-11"
   //default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-7"
   //default = "rhel-cloud/rhel-8"
-  default = "suse-cloud/sles-12"
+  //default = "suse-cloud/sles-12"
+  //default = "suse-cloud/sles-15"
 }
 
 variable "number_coreserver" {
   type = number
-  default = 5
+  default = 3
 }
 
 variable "disk-type_coreserver" {
@@ -56,33 +57,32 @@ variable "flavor_coreserver" {
 
 variable "image_dataserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
-  default = "suse-cloud/sles-12"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "suse-cloud/sles-15"
+  //default = "debian-cloud/debian-11"
   //default = "debian-cloud/debian-10"
   //default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-7"
 }
 
-variable "datadisk_size-a" {
+variable "datadisk_size-ssd" {
   type = number
   default = 100 
 }
 
-variable "datadisk_size-b" {
+variable "datadisk_size-hdd" {
   type = number
   default = 100
 }
 
-variable "disk-type_dataserver-a" {
+variable "disk-type_dataserver-ssd" {
   type = string
   default = "pd-ssd"
-  //default = "pd-standard"
 }
 
-variable "disk-type_dataserver-b" {
+variable "disk-type_dataserver-hdd" {
   type = string
   default = "pd-standard"
-  //default = "pd-ssd"
 }
 
 variable "number_dataserver" {
@@ -107,16 +107,20 @@ variable "flavor_clientserver" {
 
 variable "image_clientserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
-  default = "suse-cloud/sles-12"
+  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "suse-cloud/sles-15"
+  //default = "debian-cloud/debian-11"
+  //default = "suse-cloud/sles-12"
   //default = "debian-cloud/debian-10"
   //default = "centos-cloud/centos-8"
   //default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-8"
+  //default = "rhel-cloud/rhel-7"
 }
 
 locals {
-  startupscript_core_suse = "SUSEConnect -p PackageHub/12.5/x86_64; zypper install -y git ansible wget; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
+  startupscript_core_suse12 = "SUSEConnect -p PackageHub/12.5/x86_64; zypper install -y git ansible wget; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
+  startupscript_core_suse15 = "SUSEConnect -p PackageHub/15.3/x86_64; zypper install -y git ansible wget; git clone https://github.com/quobyte/quobyte-ansible.git /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
   startupscript_core_rhel = "dnf install -y git; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
   startupscript_core_rpmflavor = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
   ##startupscript_core_rpmflavor = "dnf install -y git ; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
