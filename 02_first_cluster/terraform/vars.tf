@@ -19,7 +19,7 @@ variable "net_cidr" {
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
-  default = "stfc-policy"
+  default = "quobyte-policy"
 }
 
 variable "git_repository" {
