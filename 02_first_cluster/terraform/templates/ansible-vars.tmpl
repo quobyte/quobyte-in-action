@@ -44,11 +44,11 @@ license_key: "fill in a valid Quobyte license key"
 
 ## Optional config settings
 
-
-# Optional: Trusted service networks. Needed for IP-Based tenant distinction.
-# See https://support.quobyte.com/docs/16/latest/multi_tenancy.html
-## trusted_service_networks: 10.164.0.0/16,192.168.2.0/24
-
 # If you set a repo id you probably want to install Quobyte 2.x
 ## repo_id: 2dxxxxc327Cfyyyasfd
 
+## Dedicated mirror: If you do not use Quobyte repositories, but your own
+# dedicated_mirror: https://mypackages.example.com/repo/quobyte/releasebranch
+
+## Turn off GPG package signature checks
+# check_package_signature: "no"
