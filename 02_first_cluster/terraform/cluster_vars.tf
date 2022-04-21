@@ -111,8 +111,7 @@ locals {
   startupscript_core_suse12 = "SUSEConnect -p PackageHub/12.5/x86_64; zypper install -y git ansible wget; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
   startupscript_core_suse15 = "SUSEConnect -p PackageHub/15.3/x86_64; zypper install -y git ansible wget; git clone https://github.com/quobyte/quobyte-ansible.git /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
   startupscript_core_rhel = "dnf install -y git; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
-  startupscript_core_rpmflavor = "yum install epel-release -y; yum update -y ; yum install -y wget ansible git python2; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
-  ##startupscript_core_rpmflavor = "dnf install -y git ; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
+  startupscript_core_rpmflavor = "yum install epel-release -y; yum update -y ; yum install -y wget ansible-python3 git python3; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
   startupscript_core_debflavor = "apt-get update; apt-get install -y wget ansible git python; git clone ${var.git_repository} /home/deploy/provisioning; chown -R deploy: /home/deploy/provisioning"
 }
 
@@ -123,5 +122,5 @@ variable "startupscript_other_debflavor" {
 
 variable "startupscript_other_rpmflavor" {
   type = string
-  default = "yum update -y; yum install -y wget curl python2"
+  default = "yum update -y; yum install -y wget curl python3"
 }
