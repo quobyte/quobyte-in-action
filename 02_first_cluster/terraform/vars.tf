@@ -4,11 +4,21 @@ variable "gcloud_project" {
   type = string
   default = "quobyte-eng"
 }
-
+// Set up some cloud provider secrets
+variable "gcloud_credentials" {
+  type = string
+  //default = "/path/to/credentials_file.json"
+  default = "~/accessfiles/CREDENTIALS_FILE.json"
+}
 variable "cluster_region" {
   type = string
   //default = "us-west1-a"
   default = "europe-west4-b"
+}
+
+variable "public_ssh_key" {
+  type = string
+  default = "~/.ssh/id_rsa.pub"
 }
 
 variable "net_cidr" {
@@ -19,20 +29,19 @@ variable "net_cidr" {
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
-  default = "quobyte-policy"
+  default = "quobyte"
 }
 
 variable "git_repository" {
   type = string
-  //default = "https://github.com/quobyte/ansible-deploy-3.x.git"
   default = "https://github.com/quobyte/quobyte-ansible.git"
 }
 variable "image_coreserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "ubuntu-os-cloud/ubuntu-1804-lts"
   //default = "debian-cloud/debian-11"
-  //default = "centos-cloud/centos-7"
+  default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-7"
   //default = "rhel-cloud/rhel-8"
   //default = "suse-cloud/sles-12"
@@ -57,11 +66,11 @@ variable "flavor_coreserver" {
 
 variable "image_dataserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "suse-cloud/sles-15"
   //default = "debian-cloud/debian-11"
   //default = "debian-cloud/debian-10"
-  //default = "centos-cloud/centos-7"
+  default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-7"
 }
 
@@ -107,13 +116,13 @@ variable "flavor_clientserver" {
 
 variable "image_clientserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "suse-cloud/sles-15"
   //default = "debian-cloud/debian-11"
   //default = "suse-cloud/sles-12"
   //default = "debian-cloud/debian-10"
   //default = "centos-cloud/centos-8"
-  //default = "centos-cloud/centos-7"
+  default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-8"
   //default = "rhel-cloud/rhel-7"
 }

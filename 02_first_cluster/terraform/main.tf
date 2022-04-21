@@ -1,6 +1,6 @@
 // Configure Google Cloud provider
 provider "google" {
- credentials = file("~/accessfiles/CREDENTIALS_FILE.json")
+ credentials = file(var.gcloud_credentials)
  project     = var.gcloud_project 
  region      = var.cluster_region 
 }
@@ -48,8 +48,7 @@ resource "google_compute_instance" "core" {
 
  metadata = {
    "ssh-keys" = <<EOT
-   deploy:${file("~/.ssh/id_rsa.pub")}
-   deploy:${file("~/.ssh/additional_key.pub")}
+   deploy:${file(var.public_ssh_key)}
 EOT
  }
 
@@ -97,8 +96,7 @@ resource "google_compute_instance" "dataserver" {
 
  metadata = {
    "ssh-keys" = <<EOT
-   deploy:${file("~/.ssh/id_rsa.pub")}
-   deploy:${file("~/.ssh/additional_key.pub")}
+   deploy:${file(var.public_ssh_key)}
 EOT
  }
 
@@ -137,8 +135,7 @@ resource "google_compute_instance" "client" {
 
  metadata = {
    "ssh-keys" = <<EOT
-   deploy:${file("~/.ssh/id_rsa.pub")}
-   deploy:${file("~/.ssh/additional_key.pub")}
+   deploy:${file(var.public_ssh_key)}
 EOT
  }
 
