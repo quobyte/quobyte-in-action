@@ -1,25 +1,5 @@
-
-// Set up some cloud provider details
-variable "gcloud_project" {
-  type = string
-  default = "quobyte-eng"
-}
-// Set up some cloud provider secrets
-variable "gcloud_credentials" {
-  type = string
-  //default = "/path/to/credentials_file.json"
-  default = "~/accessfiles/CREDENTIALS_FILE.json"
-}
-variable "cluster_region" {
-  type = string
-  //default = "us-west1-a"
-  default = "europe-west4-b"
-}
-
-variable "public_ssh_key" {
-  type = string
-  default = "~/.ssh/id_rsa.pub"
-}
+// Within this file all variables are defined to adjust 
+// Quobyte cluster settings.
 
 variable "net_cidr" {
   type = string
