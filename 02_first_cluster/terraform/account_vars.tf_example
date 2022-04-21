@@ -1,9 +1,11 @@
 // This is an example settings file 
 // to hold your personalized settings
 // like gcloud project, path to SSH keys 
-// etc. You should cp it to a file name
-// ending on *.tf and edit all values to match
+// etc. You should cp it to a file named
+// "account_vars.tf" (which is excluded from version control) 
+// and edit all values to match
 // your environment.
+
 
 // Set up some cloud provider details
 variable "gcloud_project" {
