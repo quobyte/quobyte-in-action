@@ -13,11 +13,12 @@ api_service: ${api_ip}
 service_networks: 
   - ${net_cidr} 
 # Client network(s): Quobyte clients will use this network to communicate with Quobyte services.
-client_network: 
+client_networks: 
   - ${net_cidr}
 # Trusted service network(s): Any service running within this segment will be trusted.
 # All others need to authenticate. See https://support.quobyte.com/docs/16/latest/service_authentication.html
-trusted_service_networks: ${net_cidr}
+trusted_service_networks: 
+  - ${net_cidr}
 
 ### Storage Device Layout
 # Select one or more dedicated metadata device(s).
