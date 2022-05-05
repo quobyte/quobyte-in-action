@@ -17,7 +17,7 @@ variable "net_cidr" {
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
-  default = "smallpool"
+  default = "failurerate"
 }
 
 variable "disk-type_trendingserver" {
@@ -33,7 +33,8 @@ variable "flavor_trendingserver" {
 
 variable "image_trendingserver" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "debian-cloud/debian-10"
 }
 
 variable "trendingdisk_size" {
@@ -43,7 +44,7 @@ variable "trendingdisk_size" {
 
 variable "registry_ip" {
   type = string
-  default = "10.138.0.41"
+  default = "10.154.0.56"
 }
 
 

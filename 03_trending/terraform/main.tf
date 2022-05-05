@@ -26,6 +26,9 @@ resource "google_compute_instance" "trending" {
   source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-trendingdisk"
  } 
 
+ depends_on = [
+  google_compute_disk.trendingserver-data,
+ ]
  metadata = {
    ssh-keys = "deploy:${file("~/.ssh/id_rsa.pub")}"
  }
@@ -42,7 +45,7 @@ resource "google_compute_instance" "trending" {
  }
 }
 // create necessary disks
-resource "google_compute_disk" "coreserver-data" {
+resource "google_compute_disk" "trendingserver-data" {
    name  = "${var.cluster_name}-trendingdisk"
    size  = var.trendingdisk_size 
    type  = var.disk-type_trendingserver 
