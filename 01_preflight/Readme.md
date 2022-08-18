@@ -7,7 +7,7 @@ You will have to check
 
 - if Terraform is working to orchestrate your infrastructure
 
-- If Ansible is workin in your environment
+- If Ansible is working in your environment
 
 You should follow the numbered steps:
 
