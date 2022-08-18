@@ -1,12 +1,12 @@
 # Trending server
 
-This chapter will install a trendingserver. This willl allow you to collect 
-metrics over time and graph them in a simple manner.
+This chapter will install a Prometheus instance to collect Quobyte metrics as time series data. 
+It will also install a Grafana instance to display these metrics in a nice Dashboard.
 
-## Usage
+## Installation
 
-Adjust ```vars.tf``` to consist of the IP of one of your registries.
-Optionally adjust cluster name and other values also
+Adjust ```vars.tf``` to contain the IP of one of your registries.
+Optionally adjust cluster name and other values also.
 
 ```
 $ cd terraform
@@ -21,8 +21,20 @@ $ cd provisioning
 $ ansible-playbook -i ansible-inventory install-trendingserver.yaml 
 ```
 
-Expected outcome: You should have now a publicly reachable prometheus instance. This instance is connected to 
-you Quobyte cluster through the registry IP you gave in "vars.tf". The Quobyte registry acts as service discovery host; so 
-you have to configure nothing and newly created hosts/ services etc. will be added dynamically to your trending system.
+## Expected outcome 
 
-## 
+* A Proemtheus instance, reachable via http://<PublicIPAddress>:9090
+* A Grafana instance, reachable via http://<PublicIPAddress>:3000
+
+The Prometheus instance is already equipped with a "ready to go" configuration to scrape all data 
+that Quobyte is exporting.
+The Grafana instance can be used to graph Prometheus data in pretty dashboards.
+A Quoybte specific Dashboard can be used from here:
+https://grafana.com/grafana/dashboards/14496-quobyte-dashboard-3-x/
+
+## Note
+
+The Ansible playbooks can also be used standalone. They are located in the 
+"provsioning" folder.
+
+
