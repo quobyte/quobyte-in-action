@@ -18,5 +18,5 @@ https://grafana.com/grafana/dashboards/14496-quobyte-dashboard-3-x/
 You can start installation using 
 
 ```
-ansible-playbook -i inventory install-trendingserver.yaml
+ansible-playbook -i ansible-inventory.yaml install-trendingserver.yaml
 ```
