@@ -13,4 +13,10 @@ A good start to use the Grafana instance might be the Quobyte
 Dashboard:
 https://grafana.com/grafana/dashboards/14496-quobyte-dashboard-3-x/
 
+## Install
 
+You can start installation using 
+
+```
+ansible-playbook -i inventory install-trendingserver.yaml
+```
