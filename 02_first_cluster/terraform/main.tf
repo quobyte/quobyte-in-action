@@ -57,10 +57,15 @@ EOT
  
  network_interface {
    network = "default"
-
    access_config {
      // Include this section to give the VM an external ip address
    }
+ }
+ network_interface {
+   subnetwork = "backendnetwork"
+ }
+ network_interface {
+   subnetwork = "frontend"
  }
 }
 
@@ -116,6 +121,12 @@ EOT
      // Include this section to give the VM an external ip address
    }
  }
+ network_interface {
+   subnetwork = "backendnetwork"
+ }
+ network_interface {
+   subnetwork = "frontend"
+ }
 }
 
 
@@ -147,7 +158,9 @@ EOT
    access_config {
      // Include this section to give the VM an external ip address
    }
-
+ }
+ network_interface {
+   subnetwork = "frontend"
  }
 }
 
