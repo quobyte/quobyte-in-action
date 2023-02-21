@@ -1,13 +1,12 @@
 // Configure Google Cloud provider
 provider "google" {
- credentials = file("~/accessfiles/CREDENTIALS_FILE.json")
+ credentials = file("~/accessfiles/CREDENTIALS_FILE_demo.json")
  project     = var.gcloud_project 
  region      = var.cluster_region 
 }
 
 // prometheus  instance 
 resource "google_compute_instance" "trending" {
- count        = 1
  name         = "${var.cluster_name}-trending"
  machine_type = var.flavor_trendingserver 
  zone         = var.cluster_region
@@ -22,15 +21,8 @@ resource "google_compute_instance" "trending" {
    }
  }
 
- attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${var.cluster_region}/disks/${var.cluster_name}-trendingdisk"
- } 
-
- depends_on = [
-  google_compute_disk.trendingserver-data,
- ]
  metadata = {
-   ssh-keys = "deploy:${file("~/.ssh/id_rsa.pub")}"
+   ssh-keys = "deploy:${file("~/.ssh/support_id_rsa.pub")}"
  }
 
  // install necessary software
@@ -40,16 +32,9 @@ resource "google_compute_instance" "trending" {
    network = "default"
 
    access_config {
-     // Include this section to give the VM an external ip address
+     // Include this section to assign an external ip address
    }
  }
-}
-// create necessary disks
-resource "google_compute_disk" "trendingserver-data" {
-   name  = "${var.cluster_name}-trendingdisk"
-   size  = var.trendingdisk_size 
-   type  = var.disk-type_trendingserver 
-   zone  = var.cluster_region
 }
 
 // output section
