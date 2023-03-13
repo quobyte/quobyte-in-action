@@ -8,7 +8,7 @@ an ldap server as described in ldapserver_example/HowTo.md.
 # Use LDAP as Quobyte user directory to authenticate Quobyte users
 
 You can use an external directory tree to authenticate users who want to access a Quobyte system. 
-This authentication works for Webconsole, CLLI and API.
+This authentication works for Webconsole, CLI and API.
 
 You will need a dedicated LDAP user ("bind user") too look up the username that is going to be authenticated in the given LDAP database.
 I a second step the users distinguished name + the presented password will be taken to authenticate against the LDAP directory database.
