@@ -78,7 +78,7 @@ resource "google_dns_managed_zone" "quobyte" {
 }
 
 resource "google_dns_record_set" "registry-srv" {
-  name = "_quobyte._tcp.quobyte-demo.com"
+  name = "_quobyte._tcp.quobyte-demo.com."
   type = "SRV"
   ttl  = 60
   managed_zone = google_dns_managed_zone.quobyte.name
