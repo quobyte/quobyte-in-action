@@ -32,21 +32,20 @@ resource "google_compute_instance" "core" {
  }
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${local.cluster_zone}/disks/${var.cluster_name}-metadatadisk-${count.index}-a"
+  source = google_compute_disk.coreserver-metadata-a[count.index].name
  } 
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${local.cluster_zone}/disks/${var.cluster_name}-coredatadisk-${count.index}-a"
+  source = google_compute_disk.coreserver-data-a[count.index].name 
  } 
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${local.cluster_zone}/disks/${var.cluster_name}-coredatadisk-${count.index}-b"
+  source = google_compute_disk.coreserver-data-b[count.index].name 
  } 
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${local.cluster_zone}/disks/${var.cluster_name}-coredatadisk-${count.index}-c"
+  source = google_compute_disk.coreserver-data-c[count.index].name 
  } 
-
 
  depends_on = [
   google_compute_disk.coreserver-metadata-a,
@@ -98,15 +97,15 @@ resource "google_compute_instance" "dataserver" {
  }
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${local.cluster_zone}/disks/${var.cluster_name}-datadisk-${count.index}-a"
+  source     = google_compute_disk.dataserver-data-a[count.index].name
  } 
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${local.cluster_zone}/disks/${var.cluster_name}-datadisk-${count.index}-b"
+  source     = google_compute_disk.dataserver-data-b[count.index].name
  } 
 
  attached_disk {
-  source     = "projects/${var.gcloud_project}/zones/${local.cluster_zone}/disks/${var.cluster_name}-datadisk-${count.index}-c"
+  source     = google_compute_disk.dataserver-data-c[count.index].name
  } 
 
 
@@ -175,6 +174,9 @@ EOT
  network_interface {
    subnetwork = "frontend-subnet"
  }
+ depends_on = [
+  google_compute_subnetwork.frontend-subnet
+ ]
 }
 
 // create necessary disks

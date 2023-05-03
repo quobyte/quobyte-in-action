@@ -2,10 +2,13 @@
 resource "local_file" "AnsibleVars" {
  content = templatefile("templates/ansible-vars.tmpl",
  {
-  registry_ips = join(",", google_compute_instance.core.*.network_interface.0.network_ip) 
+  //registry_entry = join(",", google_compute_instance.core.*.network_interface.0.network_ip) 
+  registry_entry = "quobyte-demo.com" 
   api_ip = google_compute_instance.core.0.network_interface.0.network_ip 
   cluster_name = var.cluster_name 
-  net_cidr = var.net_cidr 
+  backend_subnet = google_compute_subnetwork.backend-subnet.ip_cidr_range
+  frontend_subnet = google_compute_subnetwork.frontend-subnet.ip_cidr_range
+  default_subnet = "10.0.0.0/8" 
  }
  )
  filename = "provisioning/ansible-vars"

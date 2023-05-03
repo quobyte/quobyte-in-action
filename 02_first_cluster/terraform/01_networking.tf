@@ -24,3 +24,30 @@ resource "google_compute_subnetwork" "backend-subnet" {
   ip_cidr_range = "192.168.1.0/24"
   network     = google_compute_network.quobyte_backend.name
 }
+
+resource "google_compute_firewall" "frontend-rules" {
+  project     = var.gcloud_project 
+  name        = "quobyte-frontend-firewall"
+  network     = google_compute_network.quobyte_frontend.name
+  description = "Open TCP ports used by Quoybyte services"
+
+  allow {
+    protocol  = "tcp"
+    ports     = ["7860-7866", "7870-7874"]
+  }
+
+  source_ranges = [google_compute_subnetwork.frontend-subnet.ip_cidr_range, google_compute_subnetwork.backend-subnet.ip_cidr_range]
+}
+resource "google_compute_firewall" "backend-rules" {
+  project     = var.gcloud_project 
+  name        = "quobyte-backend-firewall"
+  network     = google_compute_network.quobyte_backend.name
+  description = "Open TCP ports used by Quoybyte services"
+
+  allow {
+    protocol  = "tcp"
+    ports     = ["7860-7866", "7870-7876"]
+  }
+
+  source_ranges = [google_compute_subnetwork.backend-subnet.ip_cidr_range, google_compute_subnetwork.frontend-subnet.ip_cidr_range]
+}

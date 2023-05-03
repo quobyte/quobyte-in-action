@@ -1,6 +1,6 @@
 ## Global configuration: valid for clients and servers
 # Registry entries:
-registry: ${registry_ips}
+registry: ${registry_entry}
 
 ## Ansible configuration:
 # Quobyte API endpoint to talk to
@@ -11,14 +11,16 @@ api_service: ${api_ip}
 ### Networking
 # Service network(s): Quobyte services will communicate through this network.
 service_networks: 
-  - ${net_cidr} 
+  - ${backend_subnet} 
 # Client network(s): Quobyte clients will use this network to communicate with Quobyte services.
 client_networks: 
-  - ${net_cidr}
+  - ${frontend_subnet}
 # Trusted service network(s): Any service running within this segment will be trusted.
 # All others need to authenticate. See https://support.quobyte.com/docs/16/latest/service_authentication.html
 trusted_service_networks: 
-  - ${net_cidr}
+  - ${default_subnet}
+  - ${frontend_subnet}
+  - ${backend_subnet} 
 
 ### Storage Device Layout
 # Select one or more dedicated metadata device(s).
