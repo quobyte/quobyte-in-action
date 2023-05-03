@@ -6,6 +6,11 @@ variable "net_cidr" {
   default = "10.0.0.0/8"
 }
 
+variable "cluster_region" {
+  type = string
+  default = "europe-west2"
+}
+
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
