@@ -31,6 +31,11 @@ resource "google_compute_instance" "core" {
    }
  }
 
+// fast nvme storage tier
+ scratch_disk {
+  interface = "NVME"
+ }
+
  attached_disk {
   source = google_compute_disk.coreserver-metadata-a[count.index].name
  } 
@@ -96,6 +101,11 @@ resource "google_compute_instance" "dataserver" {
    }
  }
 
+// fast nvme storage tier
+ scratch_disk {
+  interface = "NVME"
+ }
+
  attached_disk {
   source     = google_compute_disk.dataserver-data-a[count.index].name
  } 
@@ -107,7 +117,6 @@ resource "google_compute_instance" "dataserver" {
  attached_disk {
   source     = google_compute_disk.dataserver-data-c[count.index].name
  } 
-
 
  metadata = {
    "ssh-keys" = <<EOT

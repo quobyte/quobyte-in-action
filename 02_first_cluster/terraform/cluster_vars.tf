@@ -45,7 +45,8 @@ variable "disk-type_coreserver" {
 
 variable "flavor_coreserver" {
   type = string
-  default = "e2-standard-4"
+  //default = "e2-standard-4"
+  default = "n1-standard-8"
 }
 
 
@@ -86,7 +87,8 @@ variable "number_dataserver" {
 
 variable "flavor_dataserver" {
   type = string
-  default = "e2-standard-4"
+  //default = "e2-standard-4"
+  default = "n1-standard-8"
 }
 
 variable "number_clientserver" {
