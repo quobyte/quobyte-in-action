@@ -33,6 +33,11 @@ resource "google_compute_firewall" "frontend-rules" {
 
   allow {
     protocol  = "tcp"
+    ports     = ["7860-7866", "7870-7874", "55000-55010"]
+  }
+
+  allow {
+    protocol  = "udp"
     ports     = ["7860-7866", "7870-7874"]
   }
 
@@ -48,6 +53,12 @@ resource "google_compute_firewall" "backend-rules" {
     protocol  = "tcp"
     ports     = ["7860-7866", "7870-7876"]
   }
+
+  allow {
+    protocol  = "udp"
+    ports     = ["7860-7866", "7870-7876"]
+  }
+
 
   source_ranges = [google_compute_subnetwork.backend-subnet.ip_cidr_range, google_compute_subnetwork.frontend-subnet.ip_cidr_range]
 }
