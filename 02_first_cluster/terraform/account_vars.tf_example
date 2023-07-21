@@ -35,6 +35,12 @@ variable "dns_domain" {
   type = string
   default = "quobyte-demo.com."
 }
+// should refer to an existing gcp dns managed zone
+variable "dns_zone" {
+  type = string
+  default = "quobyte-demo-shard1"
+}
+
 
 // Add a public key that can be used by Ansible
 variable "public_ssh_key" {
