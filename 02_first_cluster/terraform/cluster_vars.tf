@@ -6,11 +6,6 @@ variable "net_cidr" {
   default = "10.0.0.0/8"
 }
 
-variable "cluster_region" {
-  type = string
-  default = "europe-west2"
-}
-
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
@@ -25,8 +20,8 @@ variable "image_coreserver" {
   type = string
   //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "ubuntu-os-cloud/ubuntu-1804-lts"
-  //default = "debian-cloud/debian-11"
-  default = "centos-cloud/centos-7"
+  default = "debian-cloud/debian-11"
+  //default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-7"
   //default = "rhel-cloud/rhel-8"
   //default = "suse-cloud/sles-12"
@@ -54,9 +49,9 @@ variable "image_dataserver" {
   type = string
   //default = "ubuntu-os-cloud/ubuntu-2004-lts"
   //default = "suse-cloud/sles-15"
-  //default = "debian-cloud/debian-11"
+  default = "debian-cloud/debian-11"
   //default = "debian-cloud/debian-10"
-  default = "centos-cloud/centos-7"
+  //default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-7"
 }
 
@@ -107,9 +102,9 @@ variable "image_clientserver" {
   //default = "suse-cloud/sles-15"
   //default = "debian-cloud/debian-11"
   //default = "suse-cloud/sles-12"
-  //default = "debian-cloud/debian-10"
+  default = "debian-cloud/debian-10"
   //default = "centos-cloud/centos-8"
-  default = "centos-cloud/centos-7"
+  //default = "centos-cloud/centos-7"
   //default = "rhel-cloud/rhel-8"
   //default = "rhel-cloud/rhel-7"
 }
