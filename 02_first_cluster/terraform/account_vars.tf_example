@@ -38,7 +38,7 @@ variable "dns_domain" {
 // should refer to an existing gcp dns managed zone
 variable "dns_zone" {
   type = string
-  default = "quobyte-demo-shard1"
+  default = "quobyte-demo-shard-1"
 }
 
 
