@@ -62,3 +62,18 @@ resource "google_compute_firewall" "backend-rules" {
 
   source_ranges = [google_compute_subnetwork.backend-subnet.ip_cidr_range, google_compute_subnetwork.frontend-subnet.ip_cidr_range]
 }
+resource "google_compute_firewall" "webconsole-rules" {
+  project     = var.gcloud_project 
+  name        = "quobyte-webconsole-firewall"
+  network     = "default"
+  description = "Open TCP ports used by Quoybyte webconsole"
+
+  allow {
+    protocol  = "tcp"
+    ports     = ["8080"]
+  }
+
+
+
+  source_ranges = ["0.0.0.0/0"]
+}
