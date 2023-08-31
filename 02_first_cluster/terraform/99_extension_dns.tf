@@ -1,6 +1,6 @@
 
 resource "google_dns_record_set" "root" {
-  name         = "${var.dns_domain}"
+  name         = var.dns_domain
   managed_zone = var.dns_zone
   type         = "A"
   ttl          = 300
