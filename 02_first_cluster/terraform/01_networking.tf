@@ -70,7 +70,7 @@ resource "google_compute_firewall" "webconsole-rules" {
 
   allow {
     protocol  = "tcp"
-    ports     = ["8080"]
+    ports     = ["8080", "80"]
   }
 
 
