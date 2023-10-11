@@ -21,6 +21,11 @@ resource "google_compute_instance" "core" {
  machine_type = var.flavor_coreserver 
  zone         = local.cluster_zone
  allow_stopping_for_update = true
+ scheduling { 
+   provisioning_model = "SPOT"
+   preemptible = true
+   automatic_restart = false
+ }
  lifecycle {
     ignore_changes = [attached_disk]
  }
@@ -31,7 +36,7 @@ resource "google_compute_instance" "core" {
    }
  }
 
-// fast nvme storage tier
+// fast nvme metadata tier
  scratch_disk {
   interface = "NVME"
  }
@@ -91,6 +96,11 @@ resource "google_compute_instance" "dataserver" {
  machine_type = var.flavor_dataserver 
  zone         = data.google_compute_zones.available.names[0]
  allow_stopping_for_update = true
+ scheduling { 
+   provisioning_model = "SPOT"
+   preemptible = true
+   automatic_restart = false
+ }
  lifecycle {
     ignore_changes = [attached_disk]
  }
@@ -105,6 +115,19 @@ resource "google_compute_instance" "dataserver" {
  scratch_disk {
   interface = "NVME"
  }
+
+ scratch_disk {
+  interface = "NVME"
+ }
+
+ scratch_disk {
+  interface = "SCSI"
+ }
+
+ scratch_disk {
+  interface = "SCSI"
+ }
+
 
  attached_disk {
   source     = google_compute_disk.dataserver-data-a[count.index].name
@@ -158,6 +181,11 @@ resource "google_compute_instance" "client" {
  machine_type = var.flavor_clientserver
  zone         = data.google_compute_zones.available.names[0]
  allow_stopping_for_update = true
+ scheduling { 
+   provisioning_model = "SPOT"
+   preemptible = true
+   automatic_restart = false
+ }
 
  boot_disk {
    initialize_params {
@@ -242,7 +270,7 @@ resource "google_compute_disk" "dataserver-data-c" {
 resource "google_compute_disk" "coreserver-metadata-a" {
   count = var.number_coreserver
   name  = "${var.cluster_name}-metadatadisk-${count.index}-a"
-  size  = 50
+  size  = 300
   type  = var.disk-type_dataserver-ssd 
   zone  = local.cluster_zone
 }
