@@ -1,6 +1,7 @@
 ## Global configuration: valid for clients and servers
 # Registry entries:
 registry: ${registry_entry}
+registry_frontend: ${registry_frontend_entry}
 
 ## Ansible configuration:
 # Quobyte API endpoint to talk to
@@ -18,19 +19,19 @@ client_networks:
 # Trusted service network(s): Any service running within this segment will be trusted.
 # All others need to authenticate. See https://support.quobyte.com/docs/16/latest/service_authentication.html
 trusted_service_networks: 
-  - ${default_subnet}
-  - ${frontend_subnet}
+##  - ${default_subnet}
+##  - ${frontend_subnet}
   - ${backend_subnet} 
 
 ### Storage Device Layout
 # Select one or more dedicated metadata device(s).
 # All other available devices will be used as data devices.
 metadatadevices: 
-  - sdb
+  - ${metadata_device} 
 
 ## Service configuration
 # A valid DNS entry for the S3 endpoint
-s3_endpoint: s3.example-hosts.com
+s3_endpoint: ${s3_endpoint_url}
 
 ## Client configuration
 # Mountpoint for quobyte-client.service 

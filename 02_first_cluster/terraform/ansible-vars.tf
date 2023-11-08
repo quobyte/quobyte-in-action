@@ -3,8 +3,11 @@ resource "local_file" "AnsibleVars" {
  content = templatefile("templates/ansible-vars.tmpl",
  {
   //registry_entry = join(",", google_compute_instance.core.*.network_interface.0.network_ip) 
-  registry_entry = "quobyte-demo.com" 
-  api_ip = google_compute_instance.core.0.network_interface.0.network_ip 
+  registry_entry = var.dns_domain
+  registry_frontend_entry = "frontend.${var.dns_domain}" 
+  s3_endpoint_url = "s3.${var.dns_domain}" 
+  metadata_device = "${var.metadata_device}" 
+  api_ip = google_compute_instance.core.0.network_interface.1.network_ip 
   cluster_name = var.cluster_name 
   backend_subnet = google_compute_subnetwork.backend-subnet.ip_cidr_range
   frontend_subnet = google_compute_subnetwork.frontend-subnet.ip_cidr_range
