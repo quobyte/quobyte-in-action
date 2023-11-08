@@ -41,9 +41,15 @@ resource "google_compute_instance" "core" {
   interface = "NVME"
  }
 
- attached_disk {
-  source = google_compute_disk.coreserver-metadata-a[count.index].name
- } 
+// fast SSD data tier
+ scratch_disk {
+  interface = "SCSI"
+ }
+
+// fast SSD data tier
+ scratch_disk {
+  interface = "SCSI"
+ }
 
  attached_disk {
   source = google_compute_disk.coreserver-data-a[count.index].name 
@@ -58,7 +64,6 @@ resource "google_compute_instance" "core" {
  } 
 
  depends_on = [
-  google_compute_disk.coreserver-metadata-a,
   google_compute_disk.coreserver-data-a,
   google_compute_disk.coreserver-data-b,
   google_compute_disk.coreserver-data-c,
@@ -120,6 +125,7 @@ resource "google_compute_instance" "dataserver" {
   interface = "NVME"
  }
 
+// fast SSD storage tier
  scratch_disk {
   interface = "SCSI"
  }
@@ -128,7 +134,7 @@ resource "google_compute_instance" "dataserver" {
   interface = "SCSI"
  }
 
-
+//  large HDD storage tier
  attached_disk {
   source     = google_compute_disk.dataserver-data-a[count.index].name
  } 
@@ -156,7 +162,7 @@ EOT
  ]
 
  // install necessary software
- metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" || var.image_coreserver == "rhel-cloud/rhel-7" ? local.startupscript_core_rpmflavor : local.startupscript_core_debflavor)
+ metadata_startup_script = (var.image_coreserver == "centos-cloud/centos-7" || var.image_coreserver == "centos-cloud/centos-8" || var.image_coreserver == "rhel-cloud/rhel-8" || var.image_coreserver == "rhel-cloud/rhel-7" ? var.startupscript_other_rpmflavor : var.startupscript_other_debflavor)
 
  network_interface {
    network = "default"
@@ -174,7 +180,7 @@ EOT
 }
 
 
-// some clients
+// some stateless clients
 resource "google_compute_instance" "client" {
  count        = var.number_clientserver
  name         = "${var.cluster_name}-client${count.index}"
@@ -217,6 +223,7 @@ EOT
 }
 
 // create necessary disks
+// coreserver HDD
 resource "google_compute_disk" "coreserver-data-a" {
    count = var.number_coreserver
    name  = "${var.cluster_name}-coredatadisk-${count.index}-a"
@@ -241,7 +248,7 @@ resource "google_compute_disk" "coreserver-data-c" {
    zone  = local.cluster_zone
 }
 
-
+// dataserver HDD
 resource "google_compute_disk" "dataserver-data-a" {
    count = var.number_dataserver
    name  = "${var.cluster_name}-datadisk-${count.index}-a"
@@ -264,15 +271,6 @@ resource "google_compute_disk" "dataserver-data-c" {
    size  = var.datadisk_size-hdd
    type  = var.disk-type_dataserver-hdd 
    zone  = local.cluster_zone
-}
-
-
-resource "google_compute_disk" "coreserver-metadata-a" {
-  count = var.number_coreserver
-  name  = "${var.cluster_name}-metadatadisk-${count.index}-a"
-  size  = 300
-  type  = var.disk-type_dataserver-ssd 
-  zone  = local.cluster_zone
 }
 
 // output section
