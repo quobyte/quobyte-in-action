@@ -41,7 +41,7 @@ resource "google_compute_firewall" "frontend-rules" {
     ports     = ["7860-7866", "7870-7874"]
   }
 
-  source_ranges = [google_compute_subnetwork.frontend-subnet.ip_cidr_range, google_compute_subnetwork.backend-subnet.ip_cidr_range]
+  source_ranges = [google_compute_subnetwork.frontend-subnet.ip_cidr_range, google_compute_subnetwork.backend-subnet.ip_cidr_range, "10.0.0.0/8"]
 }
 resource "google_compute_firewall" "backend-rules" {
   project     = var.gcloud_project 
@@ -70,10 +70,8 @@ resource "google_compute_firewall" "webconsole-rules" {
 
   allow {
     protocol  = "tcp"
-    ports     = ["8080", "80"]
+    ports     = ["8080", "80", "7860-7866", "22"]
   }
-
-
 
   source_ranges = ["0.0.0.0/0"]
 }
