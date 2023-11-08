@@ -2,6 +2,9 @@
 resource "local_file" "AnsibleInventory" {
  content = templatefile("templates/inventory.tmpl",
  {
+  number_dataserver = var.number_dataserver
+  number_coreserver = var.number_coreserver
+  number_clientserver = var.number_clientserver
   coreserver_ip = join(":\n      ", google_compute_instance.core.*.network_interface.0.network_ip) 
   coreserver_ips = google_compute_instance.core.*.network_interface.0.network_ip 
   dataserver_ip = join(":\n      ", google_compute_instance.dataserver.*.network_interface.0.network_ip)
