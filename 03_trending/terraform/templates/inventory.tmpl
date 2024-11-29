@@ -1,7 +1,10 @@
-[trendingserver]
-${trendingserver_ip}
-
-[all:vars]
-ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-ansible_python_interpreter='/usr/bin/python3'
+all:
+  vars: 
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    # adjust your python interpreter as needed
+    ansible_python_interpreter: /usr/bin/python3
+  children: 
+   trendingserver:
+    hosts:
+      ${trendingserver_ip}:
 
