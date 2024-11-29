@@ -1,12 +1,13 @@
 // Configure Google Cloud provider
 provider "google" {
- credentials = file("~/accessfiles/CREDENTIALS_FILE_demo.json")
+ credentials = file("~/accessfiles/CREDENTIALS_FILE_presales.json")
  project     = var.gcloud_project 
  region      = var.cluster_region 
 }
 
 // prometheus  instance 
 resource "google_compute_instance" "trending" {
+ count 	      = 1
  name         = "${var.cluster_name}-trending"
  machine_type = var.flavor_trendingserver 
  zone         = var.cluster_region
@@ -30,11 +31,17 @@ resource "google_compute_instance" "trending" {
  
  network_interface {
    network = "default"
-
    access_config {
      // Include this section to assign an external ip address
    }
  }
+ network_interface {
+   subnetwork = "backend-subnet"
+ }
+ network_interface {
+   subnetwork = "frontend-subnet"
+ }
+
 }
 
 // output section
