@@ -3,4 +3,7 @@
 02_first_cluster/terraform/provisioning/ansible-inventory 
 02_first_cluster/terraform/provisioning/ansible-vars
 02_first_cluster/terraform/account_vars.tf
-
+02_first_cluster/terraform/terraform.tfstate
+02_first_cluster/terraform/terraform.tfstate.backup
+02_first_cluster/terraform-arm/terraform.tfstate
+02_first_cluster/terraform-arm/terraform.tfstate.backup
