@@ -1,0 +1,54 @@
+all:
+  vars: 
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    # adjust your python interpreter as needed
+    ansible_python_interpreter: /usr/bin/python3
+  children: 
+   quobyteservers:
+    hosts:
+     %{~ if number_coreserver  >= 1 ~}    
+      ${coreserver_ip}:
+     %{~ endif ~}
+     %{~ if number_dataserver  >= 1 ~}    
+      ${dataserver_ip}:
+     %{~ endif ~}
+   webconsoleservices:
+    hosts:
+     %{~ if number_coreserver  >= 1 ~}    
+      ${coreserver_ip}:
+     %{~ endif ~}
+   apiservices:
+    hosts:
+     %{~ if number_coreserver  >= 1 ~}    
+      ${coreserver_ip}:
+     %{~ endif ~}
+   registryservices:
+    hosts:
+     %{~ if number_coreserver  >= 1 ~}    
+      ${coreserver_ip}:
+     %{~ endif ~}
+   metadataservices:
+    hosts:
+     %{~ if number_coreserver  >= 1 ~}    
+      ${coreserver_ip}:
+     %{~ endif ~}
+   dataservices:
+    hosts:
+     %{~ if number_coreserver  >= 1 ~}    
+      ${coreserver_ip}:
+     %{~ endif ~}
+     %{~ if number_dataserver  >= 1 ~}    
+      ${dataserver_ip}:
+     %{~ endif ~}
+   s3services:
+    hosts:
+     %{~ if number_coreserver  >= 1 ~}    
+      ${coreserver_ip}:
+     %{~ endif ~}
+
+   clients: 
+    hosts:
+     %{~ if number_clientserver  >= 1 ~}    
+      ${client_ip}:
+     %{~ endif ~}
+

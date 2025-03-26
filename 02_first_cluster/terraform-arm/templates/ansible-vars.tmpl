@@ -1,0 +1,60 @@
+## Global configuration: valid for clients and servers
+# Registry entries:
+registry: ${registry_entry}
+registry_frontend: ${registry_frontend_entry}
+
+## Ansible configuration:
+# Quobyte API endpoint to talk to
+api_service: ${api_ip}
+
+## Storage server configuration
+
+### Networking
+# Service network(s): Quobyte services will communicate through this network.
+service_networks: 
+  - ${backend_subnet} 
+# Client network(s): Quobyte clients will use this network to communicate with Quobyte services.
+client_networks: 
+  - ${frontend_subnet}
+# Trusted service network(s): Any service running within this segment will be trusted.
+# All others need to authenticate. See https://support.quobyte.com/docs/16/latest/service_authentication.html
+trusted_service_networks: 
+##  - ${default_subnet}
+##  - ${frontend_subnet}
+  - ${backend_subnet} 
+
+### Storage Device Layout
+# Select one or more dedicated metadata device(s).
+# All other available devices will be used as data devices.
+metadatadevices: 
+  - ${metadata_device} 
+
+## Service configuration
+# A valid DNS entry for the S3 endpoint
+s3_endpoint: ${s3_endpoint_url}
+
+## Client configuration
+# Mountpoint for quobyte-client.service 
+mountpoint: /quobyte
+
+# Name of your Quobyte cluster
+clustername: ${cluster_name}
+
+# Quobyte admin user
+admin_user: storageadmin
+# Quobyte admin user password. Consider ansible vault etc.
+admin_password: changeMe
+
+# Path to license file
+license_key: "fill in a valid Quobyte license key"
+
+## Optional config settings
+
+# If you set a repo id you probably want to install Quobyte 2.x
+## repo_id: 2dxxxxc327Cfyyyasfd
+
+## Dedicated mirror: If you do not use Quobyte repositories, but your own
+# dedicated_mirror: https://mypackages.example.com/repo/quobyte/releasebranch
+
+## Turn off GPG package signature checks
+# check_package_signature: "no"
