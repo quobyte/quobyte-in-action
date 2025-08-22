@@ -144,9 +144,10 @@ description: bind user that can search a given (sub-) tree and read group attr
  ibutes
 userPassword:: ZXhhbXBsZVBhc3N3b3Jk
 
-dn: cn=storageadmins,ou=groups,dc=myorganization,dc=org
+dn: cn=lunch,ou=groups,dc=myorganization,dc=org
 objectClass: top
-objectClass: groupOfMembers
 objectClass: posixGroup
-cn: exampleuser_primarygroup
-gidNumber: 1234
+cn: exampleuser_secondarygroup
+gidNumber: 1246
+memberUid: alpha
+memberUid: beta
