@@ -1,0 +1,7 @@
+%{ if number_coreserver  >= 1 ~}    
+${coreserver_ip}
+%{~ endif ~}
+
+%{ if number_dataserver  >= 1 ~}    
+${dataserver_ip}
+%{ endif ~}
