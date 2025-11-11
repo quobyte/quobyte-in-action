@@ -1,12 +1,12 @@
 // Set up some cloud provider details
 variable "gcloud_project" {
   type = string
-  default = "quobyte-eng"
+  default = "quobyte-presales"
 }
 
 variable "cluster_region" {
   type = string
-  default = "us-west1-a"
+  default = "europe-west4-b"
 }
 
 variable "net_cidr" {
@@ -17,7 +17,7 @@ variable "net_cidr" {
 // configure cluster scope variables
 variable "cluster_name" {
   type = string
-  default = "failurerate"
+  default = "quobyte"
 }
 
 variable "disk-type_trendingserver" {
@@ -33,8 +33,8 @@ variable "flavor_trendingserver" {
 
 variable "image_trendingserver" {
   type = string
-  //default = "ubuntu-os-cloud/ubuntu-2004-lts"
-  default = "debian-cloud/debian-10"
+  default = "ubuntu-os-cloud/ubuntu-2204-lts"
+  //default = "debian-cloud/debian-11"
 }
 
 variable "trendingdisk_size" {
@@ -44,7 +44,7 @@ variable "trendingdisk_size" {
 
 variable "registry_ip" {
   type = string
-  default = "10.154.0.56"
+  default = "registry0.quobyte-demo.com"
 }
 
 
