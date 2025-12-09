@@ -13,11 +13,6 @@ variable "gcloud_project" {
   default = "my-gcloud-project"
 }
 
-variable "cluster_region" {
-  type = string
-  default = "europe-west2"
-}
-
 // Set up some cloud provider secrets
 variable "gcloud_credentials" {
   type = string
