@@ -33,12 +33,12 @@ resource "google_compute_firewall" "frontend-rules" {
 
   allow {
     protocol  = "tcp"
-    ports     = ["7860-7866", "7870-7874", "55000-55010"]
+    ports     = ["7860-7866", "7870-7876", "55000-55100"]
   }
 
   allow {
     protocol  = "udp"
-    ports     = ["7860-7866", "7870-7874"]
+    ports     = ["7860-7866", "7870-7876", "55000-55100"]
   }
 
   source_ranges = [google_compute_subnetwork.frontend-subnet.ip_cidr_range, google_compute_subnetwork.backend-subnet.ip_cidr_range, "10.0.0.0/8"]
@@ -51,26 +51,25 @@ resource "google_compute_firewall" "backend-rules" {
 
   allow {
     protocol  = "tcp"
-    ports     = ["7860-7866", "7870-7876"]
+    ports     = ["7860-7866", "7870-7876", "55000-55100"]
   }
 
   allow {
     protocol  = "udp"
-    ports     = ["7860-7866", "7870-7876"]
+    ports     = ["7860-7866", "7870-7876", "55000-55100"]
   }
 
-
-  source_ranges = [google_compute_subnetwork.backend-subnet.ip_cidr_range, google_compute_subnetwork.frontend-subnet.ip_cidr_range]
+  source_ranges = [google_compute_subnetwork.backend-subnet.ip_cidr_range, google_compute_subnetwork.frontend-subnet.ip_cidr_range, "10.0.0.0/8"]
 }
 resource "google_compute_firewall" "webconsole-rules" {
   project     = var.gcloud_project 
   name        = "quobyte-webconsole-firewall"
   network     = "default"
-  description = "Open TCP ports used by Quoybyte webconsole"
+  description = "Open TCP ports used by Quoybyte webconsole and S3 service"
 
   allow {
     protocol  = "tcp"
-    ports     = ["8080", "80", "7860-7866", "22"]
+    ports     = ["8080", "80", "7860-7866"]
   }
 
   source_ranges = ["0.0.0.0/0"]
