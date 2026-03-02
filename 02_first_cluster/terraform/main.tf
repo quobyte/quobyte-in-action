@@ -12,6 +12,7 @@ data "google_compute_zones" "available" {
 
 locals {
   cluster_zone = data.google_compute_zones.available.names[0]
+  //cluster_zone = "europe-west4-b"
 }
 
 // core cluster
@@ -22,8 +23,9 @@ resource "google_compute_instance" "core" {
  zone         = local.cluster_zone
  allow_stopping_for_update = true
  scheduling { 
-   provisioning_model = "SPOT"
-   preemptible = true
+   provisioning_model = var.provisioning_model
+   preemptible = var.preemptible
+   //instance_termination_action = "DELETE"
    automatic_restart = false
  }
  lifecycle {
@@ -36,21 +38,17 @@ resource "google_compute_instance" "core" {
    }
  }
 
-// fast nvme metadata tier
+// one metadata device 
  scratch_disk {
   interface = "NVME"
  }
 
-// fast SSD data tier
+// one fast data devices 
  scratch_disk {
-  interface = "SCSI"
+  interface = "NVME"
  }
 
-// fast SSD data tier
- scratch_disk {
-  interface = "SCSI"
- }
-
+// a cheap / slow HDD tier for tiering.
  attached_disk {
   source = google_compute_disk.coreserver-data-a[count.index].name 
  } 
@@ -99,11 +97,12 @@ resource "google_compute_instance" "dataserver" {
  count        = var.number_dataserver
  name         = "${var.cluster_name}-dataserver${count.index}"
  machine_type = var.flavor_dataserver 
- zone         = data.google_compute_zones.available.names[0]
+ zone  = local.cluster_zone
  allow_stopping_for_update = true
  scheduling { 
-   provisioning_model = "SPOT"
-   preemptible = true
+   provisioning_model = var.provisioning_model
+   preemptible = var.preemptible
+   //instance_termination_action = "DELETE"
    automatic_restart = false
  }
  lifecycle {
@@ -125,13 +124,28 @@ resource "google_compute_instance" "dataserver" {
   interface = "NVME"
  }
 
-// fast SSD storage tier
  scratch_disk {
-  interface = "SCSI"
+  interface = "NVME"
  }
 
  scratch_disk {
-  interface = "SCSI"
+  interface = "NVME"
+ }
+
+ scratch_disk {
+  interface = "NVME"
+ }
+
+ scratch_disk {
+  interface = "NVME"
+ }
+
+ scratch_disk {
+  interface = "NVME"
+ }
+
+ scratch_disk {
+  interface = "NVME"
  }
 
 //  large HDD storage tier
@@ -185,11 +199,13 @@ resource "google_compute_instance" "client" {
  count        = var.number_clientserver
  name         = "${var.cluster_name}-client${count.index}"
  machine_type = var.flavor_clientserver
- zone         = data.google_compute_zones.available.names[0]
+ zone         = local.cluster_zone
  allow_stopping_for_update = true
  scheduling { 
-   provisioning_model = "SPOT"
-   preemptible = true
+   // when using spot instances we prefer machines to be deleted
+   provisioning_model = var.provisioning_model
+   preemptible = var.preemptible
+   //instance_termination_action = "DELETE"
    automatic_restart = false
  }
 
@@ -216,6 +232,9 @@ EOT
  }
  network_interface {
    subnetwork = "frontend-subnet"
+ }
+ network_interface {
+   subnetwork = "backend-subnet"
  }
  depends_on = [
   google_compute_subnetwork.frontend-subnet
@@ -248,15 +267,16 @@ resource "google_compute_disk" "coreserver-data-c" {
    zone  = local.cluster_zone
 }
 
-// dataserver HDD
+// dataserver SSD 
 resource "google_compute_disk" "dataserver-data-a" {
    count = var.number_dataserver
    name  = "${var.cluster_name}-datadisk-${count.index}-a"
    size  = var.datadisk_size-ssd
-   type  = "pd-ssd"
+   type  = var.disk-type_dataserver-ssd
    zone  = local.cluster_zone
 }
 
+// dataserver HDD
 resource "google_compute_disk" "dataserver-data-b" {
    count = var.number_dataserver
    name  = "${var.cluster_name}-datadisk-${count.index}-b"
